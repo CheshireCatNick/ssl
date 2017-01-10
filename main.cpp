@@ -108,28 +108,31 @@ void readData(char* fileName) {
   puts(fileName);
   FILE* fp = fopen(fileName, "r");
   for (int i = 0; i < 4; i++)
-    for (int j = 0; j < 4; j++)
+    for (int j = 0; j < sampleNum * maxBufferNum; j++)
       fscanf(fp, "%f", &buffer[i][j]);
 }
 int main(void) {
   buffer = new float*[channelNum];
   for (int i = 0; i < channelNum; i++)
-    buffer[i] = new float[sampleNum];
+    buffer[i] = new float[sampleNum * maxBufferNum];
 
-  char fileName[] = "./data/270d-0.dat";
+  char fileName[] = "./data/270d-1.dat";
   readData(fileName);
+  
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++)
+    for (int j = 0; j < 1; j++)
       printf("%f ", buffer[i][j]);
     puts("");
   }
-  /*
+  
   // fft process buffer
+  puts("ffting");
   for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
-    for (int i = 0; i < sampleNum * bufferNum; i++)
-      printf("%f, ", buffer[channelIndex][i]);
-    //getFreq(buffer[channelIndex]);
+    printf("channel %d\n", channelIndex + 1);
+    //for (int i = 0; i < sampleNum * bufferNum; i++)
+    //  printf("%f, ", buffer[channelIndex][i]);
+    getFreq(buffer[channelIndex]);
+    puts("");
   }
-  */
 }
 
