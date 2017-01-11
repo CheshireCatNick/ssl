@@ -12,20 +12,37 @@
   height: 400px;
   width: 800px;
 }
+button {
+  margin: 20px;
+
+}
 </style>
 </head>
 <body>
-<div class="chart">
-  <canvas id="0d"></canvas>
+<div>
+  fix channel: 
+  <button onclick="draw('channel', 'ch1')">channel 1</button>
+  <button onclick="draw('channel', 'ch2')">channel 2</button>
+  <button onclick="draw('channel', 'ch3')">channel 3</button>
+  <button onclick="draw('channel', 'ch4')">channel 4</button><br/>
+  fix angle:
+  <button onclick="draw('angle', '0d')">0 deg</button>
+  <button onclick="draw('angle', '90d')">90 deg</button>
+  <button onclick="draw('angle', '180d')">180 deg</button>
+  <button onclick="draw('angle', '270d')">270 deg</button><br/>
+
 </div>
 <div class="chart">
-  <canvas id="90d"></canvas>
+  <canvas id="c1"></canvas>
 </div>
 <div class="chart">
-  <canvas id="180d"></canvas>
+  <canvas id="c2"></canvas>
 </div>
 <div class="chart">
-  <canvas id="270d"></canvas>
+  <canvas id="c3"></canvas>
+</div>
+<div class="chart">
+  <canvas id="c4"></canvas>
 </div>
 
 <script src="./draw.js"></script>
