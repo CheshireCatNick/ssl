@@ -116,7 +116,7 @@ int main(void) {
   for (int i = 0; i < channelNum; i++)
     buffer[i] = new float[sampleNum * maxBufferNum];
 
-  char fileName[] = "./data/270d-1.dat";
+  char fileName[] = "./data/test.dat";
   readData(fileName);
   
   for (int i = 0; i < 4; i++) {
