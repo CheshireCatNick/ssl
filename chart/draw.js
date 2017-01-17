@@ -48,8 +48,27 @@ function makeChartData(title, dataArray) {
   return chartData;
 }
 
+function createCanvas() {
+  for (let i = 1; i <= 4; i++)
+    document.getElementById(`d${i}`).innerHTML 
+        = `<canvas id="c${i}"></canvas>`;
+}
+
 // draw
-let freqChart0 = new Chart('0d', makeChartData('0 deg', freq0));
-let freqChart90 = new Chart('90d', makeChartData('90 deg', freq90));
-let freqChart180 = new Chart('180d', makeChartData('180 deg', freq180));
-let freqChart270 = new Chart('270d', makeChartData('270 deg', freq270));
+function draw(fix, option) {
+  createCanvas();
+  if (fix === 'channel') {
+    const channel = option;
+    let freqChart1 = new Chart('c1', makeChartData('0 deg', freqData['0d'][channel]));
+    let freqChart2 = new Chart('c2', makeChartData('90 deg', freqData['90d'][channel]));
+    let freqChart3 = new Chart('c3', makeChartData('180 deg', freqData['180d'][channel]));
+    let freqChart4 = new Chart('c4', makeChartData('270 deg', freqData['270d'][channel]));
+  }
+  else if (fix === 'angle') {
+    const angle = option;
+    let freqChart1 = new Chart('c1', makeChartData('channel 1', freqData[angle]['ch1']));
+    let freqChart2 = new Chart('c2', makeChartData('channel 2', freqData[angle]['ch2']));
+    let freqChart3 = new Chart('c3', makeChartData('channel 3', freqData[angle]['ch3']));
+    let freqChart4 = new Chart('c4', makeChartData('channel 4', freqData[angle]['ch4']));
+  }
+}
