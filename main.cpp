@@ -1,10 +1,13 @@
 #include "./fft/kiss_fftr.h"
 #include <stdio.h>
 
+#define MAXLINE 2000000
+
 int maxBufferNum = 10;
 int channelNum = 4;
 int sampleNum = 4096;
 float** buffer;
+int bufferSize[4];
 
 void initBuffer() {
   for (int channelIndex = 0; channelIndex < 4; channelIndex++)
@@ -45,7 +48,7 @@ float** chop(float* buf, int bufSize, int frameSize,
   return bufArray;
 }
 
-void getFreq(float* buffer) {
+void getFreq(float* buffer, int bufferSize) {
   int speedUpFactor = 1;
   int MAXFREQ = 48000 / speedUpFactor;
   int findMINFREQ = 10000 / speedUpFactor;
@@ -60,7 +63,7 @@ void getFreq(float* buffer) {
   int zpSize = MAXFREQ - frameSize;
   int frameNum;
   // chop the buffer
-  float** bufArray = chop(buffer, sampleNum * maxBufferNum, frameSize,
+  float** bufArray = chop(buffer, bufferSize, frameSize,
                           overlapSize, frameNum, zpSize);
 
   for (int frame = 0; frame < frameNum; frame++)
@@ -103,36 +106,58 @@ void getFreq(float* buffer) {
   }
 }
 
-void readData(char* fileName) {
+void readData(FILE* fp) {
   // read data into buffer
-  puts(fileName);
-  FILE* fp = fopen(fileName, "r");
+  char line[channelNum][MAXLINE];
+  int j = 0;
+  char* token;
+  for (int i = 0; i < channelNum; i++) {
+    fgets(line[i], MAXLINE, fp);
+    j = 0;
+    token = strtok(line[i], " ");
+    while (token != NULL) {
+      //printf("%s\n", token);
+      buffer[i][j] = atof(token);
+      token = strtok(NULL, " ");
+      j++;
+    }
+    bufferSize[i] = j;
+  }
+  /*
   for (int i = 0; i < 4; i++)
     for (int j = 0; j < sampleNum * maxBufferNum; j++)
       fscanf(fp, "%f", &buffer[i][j]);
+  */
 }
 int main(void) {
   buffer = new float*[channelNum];
   for (int i = 0; i < channelNum; i++)
     buffer[i] = new float[sampleNum * maxBufferNum];
 
-  char fileName[] = "./data/90d-4.dat";
-  readData(fileName);
-  
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 1; j++)
-      printf("%f ", buffer[i][j]);
-    puts("");
-  }
-  
-  // fft process buffer
-  puts("ffting");
-  for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
-    printf("channel %d\n", channelIndex + 1);
-    //for (int i = 0; i < sampleNum * bufferNum; i++)
-    //  printf("%f, ", buffer[channelIndex][i]);
-    getFreq(buffer[channelIndex]);
-    puts("");
+  char fileName[] = "./data/270d-1.txt";
+  FILE* fp = fopen(fileName, "r");
+  int testNum = 6;
+  while (testNum--) {
+    readData(fp);
+    /*
+    for (int i = 0; i < channelNum; i++) {
+      for (int j = 0; j < bufferSize[i]; j++)
+        printf("%f ", buffer[i][j]);
+      puts("");
+    }*/
+    
+    // fft process buffer
+    puts("ffting");
+    putchar('[');
+    for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
+      //printf("channel %d\n", channelIndex + 1);
+      //for (int i = 0; i < sampleNum * bufferNum; i++)
+      //  printf("%f, ", buffer[channelIndex][i]);
+      putchar('[');
+      getFreq(buffer[channelIndex], bufferSize[channelIndex]);
+      puts("],");
+    }
+    puts("],");
   }
 }
 

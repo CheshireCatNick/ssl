@@ -1,0 +1,42 @@
+#!/usr/bin/expect
+
+# log in to nao
+spawn ssh nao@10.0.15.140
+expect "Password: "
+send "nao\r"
+sleep 2
+
+# start Motion and init pos
+send "./control.sh\r"
+sleep 0.5
+send "z"
+sleep 3
+send "@"
+sleep 0.5
+
+# test
+set i 0
+set testTime 3
+while { $i < $testTime } {
+  send "J"
+  sleep 2
+  send "J"
+  sleep 2
+  send "L"
+  expect "finished"
+
+  set i [ expr $i + 1 ]
+}
+
+# sit down and close program
+send "z"
+sleep 3
+send "\x1b"
+sleep 0.5
+close
+
+# download output
+spawn scp nao@10.0.15.140:/home/nao/Bin/output.txt ./output.txt
+expect "Password: "
+send "nao\r"
+interact
