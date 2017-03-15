@@ -21,7 +21,8 @@ const basicChartData = `
       "display": true,
       "fontSize": 40,
       "text": ""
-    }
+    },
+    "elements": { "point": { "radius": 0 } }
   }
 }
 `;
@@ -38,8 +39,8 @@ function makeChartData(title, dataArray) {
     let dataset = {
       "label": i + 1,
       "data": data,
-      "borderColor": color[i],
-      "backgroundColor": color[i],
+      "borderColor": color[0],
+      "backgroundColor": color[0],
       "fill": false,
       "lineTension": 0
     }
@@ -54,25 +55,41 @@ function createCanvas() {
         = `<canvas id="c${i}"></canvas>`;
 }
 
-// draw
+const angles = ['0d', '90d', '180d', '270d'];
 function draw(fix, option) {
   createCanvas();
-  /*
   if (fix === 'channel') {
-    const angle = ['0d', '90d', '180d', '270d'];
-    const channel = option;
-    let data = [];
-    for (let test in freqData[channel]) {
-      console.log(test);
+    let channel;
+    switch (option) {
+      case 'ch1':
+        channel = 0;
+        break;
+      case 'ch2':
+        channel = 1;
+        break;
+      case 'ch3':
+        channel = 2;
+        break;
+      case 'ch4':
+        channel = 3;
+        break;
     }
-    let freqChart1 = new Chart('c1', makeChartData('0 deg', freqData['0d'][channel]));
-    let freqChart2 = new Chart('c2', makeChartData('90 deg', freqData['90d'][channel]));
-    let freqChart3 = new Chart('c3', makeChartData('180 deg', freqData['180d'][channel]));
-    let freqChart4 = new Chart('c4', makeChartData('270 deg', freqData['270d'][channel]));
-  }*/
+    // data[0] is degree 0 of every test
+    let data = [];
+    for (let i in angles) data.push([]);
+
+    for (let i in angles) 
+      for (let test of freqData[angles[i]]) 
+        data[i].push(test[channel]);
+    
+    let freqChart1 = new Chart('c1', makeChartData('0 deg', data[0]));
+    let freqChart2 = new Chart('c2', makeChartData('90 deg', data[1]));
+    let freqChart3 = new Chart('c3', makeChartData('180 deg', data[2]));
+    let freqChart4 = new Chart('c4', makeChartData('270 deg', data[3]));
+  }
   if (fix === 'angle') {
     const angle = option;
-    // data[0] is channel 1
+    // data[0] is channel 1 of every test
     let data = [];
     
     for (let channel = 0; channel < 4; channel++)
@@ -81,8 +98,6 @@ function draw(fix, option) {
       for (let channel = 0; channel < 4; channel++)
         data[channel].push(testCase[channel]);
     }
-    console.log(data[0]);
-
     let freqChart1 = new Chart('c1', makeChartData('channel 1', data[0]));
     let freqChart2 = new Chart('c2', makeChartData('channel 2', data[1]));
     let freqChart3 = new Chart('c3', makeChartData('channel 3', data[2]));
