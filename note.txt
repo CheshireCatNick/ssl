@@ -3,3 +3,24 @@
 
   1        2
 
+3/2 issues:
+  1. the sound is annoying = =
+  2. head angle
+  3. data collection
+  4. uncertainty, distance
+  5. noise
+
+3/13 crash issue(start time exceed buffer):
+
+start time ptr exceed first buffer time stamp
+miss the first buffer. give up testing
+starttime = 822161930, first buffer = 822330483, delta = 168553
+-4026
+
+|----------|----------|----------|----------|
+
+      |             buffer            |
+    case1                           case2
+
+case1: some data is lost, give up testing (or test again)
+case2: skip this buffer

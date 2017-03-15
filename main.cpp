@@ -2,12 +2,16 @@
 #include <stdio.h>
 
 #define MAXLINE 2000000
+#define MAXFRAMENUM 200
 
 int maxBufferNum = 10;
 int channelNum = 4;
 int sampleNum = 4096;
 float** buffer;
 int bufferSize[4];
+
+bool printFreq = true;
+bool printPredict = false;
 
 void initBuffer() {
   for (int channelIndex = 0; channelIndex < 4; channelIndex++)
@@ -48,7 +52,7 @@ float** chop(float* buf, int bufSize, int frameSize,
   return bufArray;
 }
 
-void getFreq(float* buffer, int bufferSize) {
+void getFreq(float* buffer, int bufferSize, float* freqs) {
   int speedUpFactor = 1;
   int MAXFREQ = 48000 / speedUpFactor;
   int findMINFREQ = 10000 / speedUpFactor;
@@ -65,7 +69,7 @@ void getFreq(float* buffer, int bufferSize) {
   // chop the buffer
   float** bufArray = chop(buffer, bufferSize, frameSize,
                           overlapSize, frameNum, zpSize);
-
+  int result[frameNum];
   for (int frame = 0; frame < frameNum; frame++)
   {
     // fft initialize
@@ -100,9 +104,12 @@ void getFreq(float* buffer, int bufferSize) {
     //if (maxStrength < 900000)
     //  return;
     int trueF = fWithMaxStrength * speedUpFactor - 12000;
-    float tolerance = 40.0;
-    if (trueF >= -tolerance && trueF <= tolerance)
-      printf("%d,", trueF);
+    int tolerance = 40;
+    if (trueF < -tolerance) trueF = -tolerance;
+    else if (trueF > tolerance) trueF = tolerance;
+
+    freqs[frame] = trueF;  
+    if (printFreq) printf("%d,", trueF);
   }
 }
 
@@ -134,9 +141,10 @@ int main(void) {
   for (int i = 0; i < channelNum; i++)
     buffer[i] = new float[sampleNum * maxBufferNum];
 
-  char fileName[] = "./data/270d-1.txt";
+  char fileName[] = "./t.txt";
   FILE* fp = fopen(fileName, "r");
-  int testNum = 6;
+  int testNum = 200;
+  float freqs[MAXFRAMENUM];
   while (testNum--) {
     readData(fp);
     /*
@@ -147,17 +155,28 @@ int main(void) {
     }*/
     
     // fft process buffer
-    puts("ffting");
-    putchar('[');
+    //puts("ffting");
+    if (printFreq) putchar('[');
     for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
       //printf("channel %d\n", channelIndex + 1);
       //for (int i = 0; i < sampleNum * bufferNum; i++)
       //  printf("%f, ", buffer[channelIndex][i]);
-      putchar('[');
-      getFreq(buffer[channelIndex], bufferSize[channelIndex]);
-      puts("],");
+      if (printFreq) putchar('[');
+      getFreq(buffer[channelIndex], bufferSize[channelIndex], freqs);
+      if (printFreq) puts("],");
+      if (printPredict && channelIndex == 0) {
+        printf("test #%d\n", 6 - testNum);
+        // judge result
+        int sum = 0;
+        for (int i = 40; i < 80; i++)
+          sum += freqs[i];
+        printf("sum = %d\n", sum);
+        if (sum > -300) puts("Predict: Facing sound source");
+        else if (sum <= -300 && sum >= -350) puts("Predict: Nah");
+        else puts("Predict: Back to sound source");
+      }
     }
-    puts("],");
+    if (printFreq) puts("],");
   }
 }
 
