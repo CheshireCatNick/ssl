@@ -4,7 +4,7 @@
 # settings
 set receiverIP "10.0.15.140"
 set senderIP "10.0.15.100"
-set startTime 30
+set startTime 60
 set playSound 1
 set shutdownRobot 1
 set shutdownComputer 0

@@ -1,0 +1,15 @@
+{
+  "name": "ml",
+  "version": "1.0.0",
+  "description": "svm ml for SSLDop",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodejs main.js"
+  },
+  "author": "Nicky",
+  "license": "ISC",
+  "dependencies": {
+    "node-svm": "^2.1.8"
+  }
+}

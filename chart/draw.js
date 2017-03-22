@@ -22,7 +22,8 @@ const basicChartData = `
       "fontSize": 40,
       "text": ""
     },
-    "elements": { "point": { "radius": 0 } }
+    "elements": { "point": { "radius": 0 } },
+    "legend": { "display": false }
   }
 }
 `;

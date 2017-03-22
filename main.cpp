@@ -3,6 +3,7 @@
 
 #define MAXLINE 2000000
 #define MAXFRAMENUM 200
+#define MAXFILENAME 200
 
 int maxBufferNum = 10;
 int channelNum = 4;
@@ -12,6 +13,9 @@ int bufferSize[4];
 
 bool printFreq = true;
 bool printPredict = false;
+
+FILE* inputFP;
+FILE* outputFP;
 
 void initBuffer() {
   for (int channelIndex = 0; channelIndex < 4; channelIndex++)
@@ -52,7 +56,7 @@ float** chop(float* buf, int bufSize, int frameSize,
   return bufArray;
 }
 
-void getFreq(float* buffer, int bufferSize, float* freqs) {
+void getFreq(float* buffer, int bufferSize, int* freqs) {
   int speedUpFactor = 1;
   int MAXFREQ = 48000 / speedUpFactor;
   int findMINFREQ = 10000 / speedUpFactor;
@@ -86,6 +90,7 @@ void getFreq(float* buffer, int bufferSize, float* freqs) {
         //printf("%d: %f\n", i, input[i]);
     }
     fft(input, output, MAXFREQ);
+
     for (int f = findMINFREQ; f < findMAXFREQ; f++)
       strength[f] = 0;
     // calculate strength of each frequency
@@ -107,9 +112,10 @@ void getFreq(float* buffer, int bufferSize, float* freqs) {
     int tolerance = 40;
     if (trueF < -tolerance) trueF = -tolerance;
     else if (trueF > tolerance) trueF = tolerance;
-
-    freqs[frame] = trueF;  
-    if (printFreq) printf("%d,", trueF);
+    
+    freqs[frame] = trueF;
+    if (printFreq) fprintf(outputFP, "%d,", freqs[frame]);
+    free(bufArray[frame]);
   }
 }
 
@@ -123,47 +129,41 @@ void readData(FILE* fp) {
     j = 0;
     token = strtok(line[i], " ");
     while (token != NULL) {
-      //printf("%s\n", token);
       buffer[i][j] = atof(token);
       token = strtok(NULL, " ");
       j++;
     }
     bufferSize[i] = j;
   }
-  /*
-  for (int i = 0; i < 4; i++)
-    for (int j = 0; j < sampleNum * maxBufferNum; j++)
-      fscanf(fp, "%f", &buffer[i][j]);
-  */
 }
-int main(void) {
+
+int main(int argv, char* args[]) {
   buffer = new float*[channelNum];
   for (int i = 0; i < channelNum; i++)
     buffer[i] = new float[sampleNum * maxBufferNum];
+  char signalDataPath[] = "./data/signal/";
+  char freqDataPath[] = "./data/freq/";
+  char inputFileName[MAXFILENAME];
+  strcpy(inputFileName, signalDataPath);
+  strcat(inputFileName, args[1]);
+  inputFP = fopen(inputFileName, "r");
+  char outputFileName[MAXFILENAME];
+  strcpy(outputFileName, freqDataPath);
+  strcat(outputFileName, args[1]);
+  strcpy(outputFileName + strlen(outputFileName) - 4, ".js");
+  outputFP = fopen(outputFileName, "w");
 
-  char fileName[] = "./t.txt";
-  FILE* fp = fopen(fileName, "r");
-  int testNum = 200;
-  float freqs[MAXFRAMENUM];
+  int testNum = 1000;
+  int freqs[MAXFRAMENUM];
   while (testNum--) {
-    readData(fp);
-    /*
-    for (int i = 0; i < channelNum; i++) {
-      for (int j = 0; j < bufferSize[i]; j++)
-        printf("%f ", buffer[i][j]);
-      puts("");
-    }*/
-    
-    // fft process buffer
-    //puts("ffting");
-    if (printFreq) putchar('[');
+    printf("%d\n", testNum);
+    readData(inputFP);
+    if (printFreq) fputs("[", outputFP);
     for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
-      //printf("channel %d\n", channelIndex + 1);
-      //for (int i = 0; i < sampleNum * bufferNum; i++)
-      //  printf("%f, ", buffer[channelIndex][i]);
-      if (printFreq) putchar('[');
+      if (printFreq) fputs("[", outputFP);
       getFreq(buffer[channelIndex], bufferSize[channelIndex], freqs);
-      if (printFreq) puts("],");
+      if (printFreq) fputs("],", outputFP);
+      /*
       if (printPredict && channelIndex == 0) {
         printf("test #%d\n", 6 - testNum);
         // judge result
@@ -174,9 +174,9 @@ int main(void) {
         if (sum > -300) puts("Predict: Facing sound source");
         else if (sum <= -300 && sum >= -350) puts("Predict: Nah");
         else puts("Predict: Back to sound source");
-      }
+      }*/
     }
-    if (printFreq) puts("],");
+    if (printFreq) fputs("],\n", outputFP);
   }
 }
 
