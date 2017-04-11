@@ -1,4 +1,4 @@
 t.*
-main
-data/signal
-ml/node_modules
+dop/main
+dop/data/signal
+dop/ml/node_modules
