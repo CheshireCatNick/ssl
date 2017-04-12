@@ -5,6 +5,7 @@
 #define MAXFRAMENUM 200
 #define MAXFILENAME 200
 
+int testNum = 1;
 int maxBufferNum = 10;
 int channelNum = 4;
 int sampleNum = 4096;
@@ -56,7 +57,7 @@ float** chop(float* buf, int bufSize, int frameSize,
   return bufArray;
 }
 
-void getFreq(float* buffer, int bufferSize, int* freqs) {
+void getVol(float* buffer, int bufferSize, double* vols) {
   int speedUpFactor = 1;
   int MAXFREQ = 48000 / speedUpFactor;
   int findMINFREQ = 10000 / speedUpFactor;
@@ -113,8 +114,8 @@ void getFreq(float* buffer, int bufferSize, int* freqs) {
     if (trueF < -tolerance) trueF = -tolerance;
     else if (trueF > tolerance) trueF = tolerance;
     
-    freqs[frame] = trueF;
-    if (printFreq) fprintf(outputFP, "%d,", freqs[frame]);
+    vols[frame] = maxStrength;
+    if (printFreq) fprintf(outputFP, "%f,", vols[frame]);
     free(bufArray[frame]);
   }
 }
@@ -142,7 +143,7 @@ int main(int argv, char* args[]) {
   for (int i = 0; i < channelNum; i++)
     buffer[i] = new float[sampleNum * maxBufferNum];
   char signalDataPath[] = "./data/signal/";
-  char freqDataPath[] = "./data/freq/";
+  char freqDataPath[] = "./data/volume/";
   char inputFileName[MAXFILENAME];
   strcpy(inputFileName, signalDataPath);
   strcat(inputFileName, args[1]);
@@ -153,15 +154,14 @@ int main(int argv, char* args[]) {
   strcpy(outputFileName + strlen(outputFileName) - 4, ".js");
   outputFP = fopen(outputFileName, "w");
 
-  int testNum = 1000;
-  int freqs[MAXFRAMENUM];
+  double vols[MAXFRAMENUM];
   while (testNum--) {
     printf("%d\n", testNum);
     readData(inputFP);
     if (printFreq) fputs("[", outputFP);
     for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
       if (printFreq) fputs("[", outputFP);
-      getFreq(buffer[channelIndex], bufferSize[channelIndex], freqs);
+      getVol(buffer[channelIndex], bufferSize[channelIndex], vols);
       if (printFreq) fputs("],", outputFP);
       /*
       if (printPredict && channelIndex == 0) {

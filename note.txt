@@ -3,6 +3,13 @@
 
   1        2
 
+2. Mic:
+    B    A
+
+  C        D  
+
+
+
 3/2 issues:
   1. the sound is annoying = =
   2. head angle
