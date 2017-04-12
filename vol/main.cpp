@@ -155,6 +155,7 @@ int main(int argv, char* args[]) {
   outputFP = fopen(outputFileName, "w");
 
   double vols[MAXFRAMENUM];
+  fputs("const vols = \n", outputFP);
   while (testNum--) {
     printf("%d\n", testNum);
     readData(inputFP);
@@ -176,7 +177,8 @@ int main(int argv, char* args[]) {
         else puts("Predict: Back to sound source");
       }*/
     }
-    if (printFreq) fputs("],\n", outputFP);
+    if (printFreq) fputs("];\n", outputFP);
   }
+  fputs("module.exports = vols;\n", outputFP);
 }
 

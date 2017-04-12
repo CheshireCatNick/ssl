@@ -1,5 +1,5 @@
 'use strict';
-const vols = require('./data/volume/back');
+const vols = require('./data/volume/' + process.argv[2]);
 const channelNum = 4;
 const frameNum = vols[0].length;
 
@@ -49,11 +49,26 @@ function calcSoundCenter(intensity) {
   soundCenter.y /= intensitySum;
   return soundCenter;
 }
-
+function calcAngle(x, y) {
+  const rad = Math.atan2(y, x);
+  const deg = rad * (180 / Math.PI);
+  return deg;
+}
+let avgsc = {
+  x: 0,
+  y: 0
+};
 for (let f in vols[0]) {
   let intensity = [];
   for (let c in vols) 
     intensity.push(vols[c][f]);
-  console.log(calcSoundCenter(intensity));
+  let tsc = calcSoundCenter(intensity);
+  console.log(tsc)
+  avgsc.x += tsc.x;
+  avgsc.y += tsc.y;
 }
+avgsc.x /= frameNum;
+avgsc.y /= frameNum;
+console.log('avg = ', avgsc);
+console.log(calcAngle(avgsc.x, avgsc.y));
 

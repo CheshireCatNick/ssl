@@ -1,0 +1,78 @@
+#!/usr/bin/expect
+
+# settings
+set receiverIP "10.0.15.140"
+set senderIP "10.0.15.131"
+set startTime 0
+set playSound 1
+set shutdownRobot 0
+set shutdownComputer 0
+set runMain 0
+
+# start timer
+sleep [ expr $startTime * 60 ]
+send_user "time to start testing!\n"
+
+if { $playSound == 1 } {
+  # sound sender log in
+  spawn ssh nao@$senderIP
+  expect "Password: "
+  send "nao\r"
+  sleep 2
+
+  # play sound
+  send "./control.sh\r"
+  sleep 2
+  close
+}
+
+# sound receiver log in
+spawn ssh nao@$receiverIP
+expect "Password: "
+send "nao\r"
+sleep 2
+
+# start receiver Motion
+send "./control.sh\r"
+sleep 3
+send "\x1b"
+sleep 0.5
+close
+
+# shutdown sound sender
+if { $shutdownRobot == 1} {
+  spawn ssh nao@$senderIP
+  expect "Password: "
+  send "nao\r"
+  sleep 2
+  send "qicli call 29.117\r"
+  sleep 2
+  close
+}
+
+# download output
+spawn scp nao@$receiverIP:/home/nao/Bin/output.txt ./output.txt
+expect "Password: "
+send "nao\r"
+set timeout -1
+expect "100%"
+send_user "output.txt is downloaded\n"
+
+# shutdown receiver
+if { $shutdownRobot == 1 } {
+  spawn ssh nao@$receiverIP
+  expect "Password: "
+  send "nao\r"
+  sleep 2
+  send "qicli call 29.117\r"
+  sleep 2
+  close
+}
+
+# shudown computer
+if { $shutdownComputer == 1 } {
+  spawn shutdown 0
+}
+# run main
+#spawn make
+#interact
