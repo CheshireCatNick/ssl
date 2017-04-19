@@ -67,8 +67,8 @@ void getVol(float* buffer, int bufferSize, double* vols) {
 
   float strength[MAXFREQ];
   // define frame info
-  int frameSize = 1024;
-  int overlapSize = 800;
+  int frameSize = 2048;
+  int overlapSize = 80;
   int zpSize = MAXFREQ - frameSize;
   int frameNum;
   // chop the buffer
@@ -96,8 +96,7 @@ void getVol(float* buffer, int bufferSize, double* vols) {
       strength[f] = 0;
     // calculate strength of each frequency
     for (int f = findMINFREQ; f < findMAXFREQ; f++)
-      strength[f] += sqrt(output[f].i * output[f].i
-                      + output[f].r * output[f].r);
+      strength[f] += sqrt(output[f].i * output[f].i + output[f].r * output[f].r);
     // find the frequency with max strength
     int fWithMaxStrength = 0;
     double maxStrength = 0;
@@ -109,12 +108,19 @@ void getVol(float* buffer, int bufferSize, double* vols) {
       }
     //if (maxStrength < 900000)
     //  return;
-    int trueF = fWithMaxStrength * speedUpFactor - 12000;
-    int tolerance = 40;
-    if (trueF < -tolerance) trueF = -tolerance;
-    else if (trueF > tolerance) trueF = tolerance;
-    
-    vols[frame] = maxStrength;
+    int interval = 25;
+    vols[frame] = 0;
+    //printf("frame: %d\n", frame);
+    for (int i = fWithMaxStrength - interval; i <= fWithMaxStrength + interval; i++) {
+      if (frame == 7)
+        printf("%f\n", strength[i]);
+      vols[frame] += strength[i];
+    }
+    if (frame == 7) {
+      puts("");
+      //printf("%d %f %d\n", fWithMaxStrength, strength[fWithMaxStrength], frameNum);
+    }
+    //vols[frame] = maxStrength;
     if (printFreq) fprintf(outputFP, "%f,", vols[frame]);
     free(bufArray[frame]);
   }
@@ -157,25 +163,14 @@ int main(int argv, char* args[]) {
   double vols[MAXFRAMENUM];
   fputs("const vols = \n", outputFP);
   while (testNum--) {
-    printf("%d\n", testNum);
+    //printf("%d\n", testNum);
     readData(inputFP);
     if (printFreq) fputs("[", outputFP);
     for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
       if (printFreq) fputs("[", outputFP);
+      //if (channelIndex == 0) 
       getVol(buffer[channelIndex], bufferSize[channelIndex], vols);
       if (printFreq) fputs("],", outputFP);
-      /*
-      if (printPredict && channelIndex == 0) {
-        printf("test #%d\n", 6 - testNum);
-        // judge result
-        int sum = 0;
-        for (int i = 40; i < 80; i++)
-          sum += freqs[i];
-        printf("sum = %d\n", sum);
-        if (sum > -300) puts("Predict: Facing sound source");
-        else if (sum <= -300 && sum >= -350) puts("Predict: Nah");
-        else puts("Predict: Back to sound source");
-      }*/
     }
     if (printFreq) fputs("];\n", outputFP);
   }

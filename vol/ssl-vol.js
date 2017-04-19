@@ -62,8 +62,9 @@ for (let f in vols[0]) {
   let intensity = [];
   for (let c in vols) 
     intensity.push(vols[c][f]);
+  console.log(vols[0][f] - vols[1][f]);
   let tsc = calcSoundCenter(intensity);
-  console.log(tsc)
+  //console.log(tsc)
   avgsc.x += tsc.x;
   avgsc.y += tsc.y;
 }
