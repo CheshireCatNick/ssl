@@ -112,14 +112,10 @@ void getVol(float* buffer, int bufferSize, double* vols) {
     vols[frame] = 0;
     //printf("frame: %d\n", frame);
     for (int i = fWithMaxStrength - interval; i <= fWithMaxStrength + interval; i++) {
-      if (frame == 7)
-        printf("%f\n", strength[i]);
       vols[frame] += strength[i];
     }
-    if (frame == 7) {
-      puts("");
-      //printf("%d %f %d\n", fWithMaxStrength, strength[fWithMaxStrength], frameNum);
-    }
+    printf("%f\n", vols[frame]);
+    //printf("%d %f %d\n", fWithMaxStrength, strength[fWithMaxStrength], frameNum);
     //vols[frame] = maxStrength;
     if (printFreq) fprintf(outputFP, "%f,", vols[frame]);
     free(bufArray[frame]);
@@ -167,8 +163,10 @@ int main(int argv, char* args[]) {
     readData(inputFP);
     if (printFreq) fputs("[", outputFP);
     for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
+      printf("ch%d\n", channelIndex + 1);
       if (printFreq) fputs("[", outputFP);
       //if (channelIndex == 0) 
+
       getVol(buffer[channelIndex], bufferSize[channelIndex], vols);
       if (printFreq) fputs("],", outputFP);
     }
