@@ -63,6 +63,8 @@ function calcConfidence(a) {
     min = (n > max) ? n : max;
   }
   console.log(max);
+  max += Math.min
+
 
 
 
