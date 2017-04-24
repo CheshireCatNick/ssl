@@ -54,6 +54,20 @@ function calcAngle(x, y) {
   const deg = rad * (180 / Math.PI);
   return deg;
 }
+function calcConfidence(a) {
+  a = a.slice(1);
+  let min = a[0];
+  let max = a[0];
+  for (let n of a) {
+    min = (n < min) ? n : min;
+    min = (n > max) ? n : max;
+  }
+  console.log(max);
+
+
+
+  return 0;
+}
 let avgsc = {
   x: 0,
   y: 0
@@ -73,3 +87,41 @@ avgsc.y /= frameNum;
 console.log('avg = ', avgsc);
 console.log(calcAngle(avgsc.x, avgsc.y));
 
+let intensity = [0, 0, 0, 0, 0];
+for (let f in vols[0]) {
+  for (let c = 0; c < channelNum; c++) 
+    intensity[c + 1] += vols[c][f];
+}
+let result = [0, 0, 0, 0, 0];
+// threshold?
+/*
+if (intensity[1] + intensity[2] - (intensity[3] + intensity[4]) > 0) {
+  result[3] += 1;
+  result[4] += 1;
+}
+else {
+  result[1] += 1;
+  result[2] += 1;
+}
+if (intensity[1] + intensity[3] - (intensity[2] + intensity[4]) > 0) {
+  result[2] += 1;
+  result[3] += 1;
+}
+else {
+  result[1] += 1;
+  result[4] += 1;
+}*/
+const hi1234 = 550000000;
+const hi1324 = 0;
+const sc1234 = intensity[1] + intensity[2] - (intensity[3] + intensity[4]) + hi1234;
+const sc1324 = intensity[1] + intensity[3] - (intensity[2] + intensity[4]) + hi1324;
+console.log(sc1234);
+console.log(sc1324);
+
+result[1] += -sc1234 - sc1324;
+result[2] += -sc1234 + sc1324;
+result[3] += sc1234 + sc1324;
+result[4] += sc1234 - sc1324;
+console.log(result);
+console.log(indexOfMax(result));
+console.log(calcConfidence(result));
