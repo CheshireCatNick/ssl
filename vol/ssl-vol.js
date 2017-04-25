@@ -100,7 +100,7 @@ let result = [0, 0, 0, 0, 0];
 // threshold?
 const hi1234 = 550000000;
 const hi1324 = 0;
-const sc1234 = intensity[1] + intensity[2] - (intensity[3] + intensity[4]) + hi1234;
+const sc1234 = intensity[1] + intensity[2] - (intensity[3] + intensity[4]);
 const sc1324 = intensity[1] + intensity[3] - (intensity[2] + intensity[4]) + hi1324;
 /*
 if (intensity[1] + intensity[2] - (intensity[3] + intensity[4]) > 0) {
