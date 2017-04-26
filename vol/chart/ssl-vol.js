@@ -1,5 +1,5 @@
 'use strict';
-const vols = require('./data/volume/' + process.argv[2]);
+//const vols = require('./data/volume/' + process.argv[2]);
 const channelNum = 4;
 // all of the index is sorted by quadrant
 // [0, q1, q2, q3, q4]
@@ -47,13 +47,9 @@ function calcSoundCenter(intensity) {
   }
   soundCenter.x /= intensitySum;
   soundCenter.y /= intensitySum;
-  console.log('center method');
-  console.log('avg = ', soundCenter);
-  console.log(calcAngle(soundCenter.x, soundCenter.y));
-  console.log('');
-  console.log('');
   return {
-    soundCenter: soundCenter,
+    x: soundCenter.x,
+    y: soundCenter.y,
     angle: calcAngle(soundCenter.x, soundCenter.y)
   };
 }
@@ -121,7 +117,6 @@ function oneMic(intensity) {
     for (let j = 1; j <= channelNum; j++)
       result[i] -= (intensity[j] + 0);
   }
-  console.log('single mic method');
   return {
     result: result.slice(1),
     q: indexOfMax(result),

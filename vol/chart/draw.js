@@ -55,13 +55,36 @@ function createCanvas() {
     document.getElementById(`d${i}`).innerHTML 
         = `<canvas id="c${i}"></canvas>`;
 }
+function output(div, dataName) {
+  const d = document.getElementById(div);
+  d.innerHTML = '';
+  const intensity = calcIntensity(vols[dataName]);
+  const soundCenter = calcSoundCenter(intensity);
+  console.log(soundCenter);
+  d.innerHTML += '<h3>sound center<h3/>';
+  d.innerHTML += `x: ${soundCenter.x} y: ${soundCenter.y}<br/>`;
+  d.innerHTML += `angle: ${soundCenter.angle}<br/>`;
+  
+  let result = twoMic(intensity);
+  console.log(result);
+  d.innerHTML += '<h3>twoMic<h3/>';
+  d.innerHTML += `q: ${result.q}<br/>`;
+  d.innerHTML += `ratio: ${result.ratio}<br/>`;
 
-const angles = ['0d', '90d', '180d', '270d'];
+  result = oneMic(intensity);
+  console.log(result);
+  d.innerHTML += '<h3>oneMic<h3/>';
+  d.innerHTML += `q: ${result.q}<br/>`;
+  d.innerHTML += `ratio: ${result.ratio}<br/>`;
+}
 function draw(angle) {
   createCanvas();
   let c1 = new Chart('c1', makeChartData('test 1', vols[angle + '-1']));
+  output('r1', angle + '-1');
   let c2 = new Chart('c2', makeChartData('test 2', vols[angle + '-2']));
+  output('r2', angle + '-2');
   let c3 = new Chart('c3', makeChartData('near 1', vols[angle + '-n']));
+  output('r3', angle + '-n');
   //let c4 = new Chart('c4', makeChartData('near 2', vols[angle + '']));
 
 
