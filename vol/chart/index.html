@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="data.js"></script>
+<style>
+.chart {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  height: 400px;
+  width: 800px;
+}
+button {
+  margin: 10px;
+
+}
+</style>
+</head>
+<body>
+<div>
+  <button onclick="draw('0')">0 deg</button>
+  <button onclick="draw('90')">90 deg</button>
+  <button onclick="draw('180')">180 deg</button>
+  <button onclick="draw('270')">270 deg</button>
+
+</div>
+<div class="chart" id="d1"></div>
+<div id="r1"></div>
+<div class="chart" id="d2"></div>
+<div id="r2"></div>
+<div class="chart" id="d3"></div>
+<div id="r3"></div>
+<div class="chart" id="d4"></div>
+<div id="r4"></div>
+
+<script src="./draw.js"></script>
+
+</body>
+</html>

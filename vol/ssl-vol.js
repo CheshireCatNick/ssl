@@ -102,28 +102,28 @@ const hi1234 = 550000000;
 const hi1324 = 0;
 const sc1234 = intensity[1] + intensity[2] - (intensity[3] + intensity[4]);
 const sc1324 = intensity[1] + intensity[3] - (intensity[2] + intensity[4]) + hi1324;
+
+if (sc1234 > 0) {
+  result[3] += sc1234;
+  result[4] += sc1234;
+}
+else {
+  result[1] -= sc1234;
+  result[2] -= sc1234;
+}
+if (sc1324 > 0) {
+  result[2] += sc1324;
+  result[3] += sc1324;
+}
+else {
+  result[1] -= sc1324;
+  result[4] -= sc1324;
+}
 /*
-if (intensity[1] + intensity[2] - (intensity[3] + intensity[4]) > 0) {
-  result[3] += 1;
-  result[4] += 1;
-}
-else {
-  result[1] += 1;
-  result[2] += 1;
-}
-if (intensity[1] + intensity[3] - (intensity[2] + intensity[4]) > 0) {
-  result[2] += 1;
-  result[3] += 1;
-}
-else {
-  result[1] += 1;
-  result[4] += 1;
-}
-*/
 result[1] += -sc1234 - sc1324;
 result[2] += -sc1234 + sc1324;
 result[3] += sc1234 + sc1324;
-result[4] += sc1234 - sc1324;
+result[4] += sc1234 - sc1324;*/
 console.log('sum two mics method');
 console.log(result);
 console.log(indexOfMax(result));

@@ -1,0 +1,208 @@
+[90m01:43:07.453346 [0m[IniCommonConfigBase] ini common config path: ../Config/NtuRobopal.ini[0m
+[0m[90m01:43:07.456735 [0m[MotionFlags] [32mconfig_file[0m=../Config/Nao332/MotionFlags.ini[0m
+[0m[90m01:43:07.457040 [0m[All] [32misV5[0m=true[0m
+[0m[90m01:43:07.457116 [0m[All] [32misStandHighWhenOffGround[0m=true[0m
+[0m[90m01:43:07.457174 [0m[All] [32misDetectInstability[0m=false[0m
+[0m[90m01:43:07.457228 [0m[All] [32misDetectFallen[0m=true[0m
+[0m[90m01:43:07.457282 [0m[All] [32misUseFakeBall[0m=true[0m
+[0m[90m01:43:07.457738 [0m[Walking] [32mconfig_file[0m=../Config/Nao332/Walking.ini[0m
+[0m[90m01:43:07.458495 [0m[Speed] [32mmaxSpeed_r[0m=0.3[0m
+[0m[90m01:43:07.459577 [0m[Speed] [32mmaxSpeed_x[0m=80[0m
+[0m[90m01:43:07.459692 [0m[Speed] [32mmaxSpeed_y[0m=40[0m
+[0m[90m01:43:07.460465 [0m[SensorValuesCalibrator] [32mconfig_file[0m=../Config/Nao332/SensorValuesCalibrator.ini[0m
+[0m[90m01:43:07.460998 [0m[FSR] [32mleftFrontLeft_scale[0m=1[0m
+[0m[90m01:43:07.461112 [0m[FSR] [32mleftFrontRight_scale[0m=1[0m
+[0m[90m01:43:07.461185 [0m[FSR] [32mleftRearLeft_scale[0m=1[0m
+[0m[90m01:43:07.461256 [0m[FSR] [32mleftRearRight_scale[0m=1[0m
+[0m[90m01:43:07.461327 [0m[FSR] [32mrightFrontLeft_scale[0m=1[0m
+[0m[90m01:43:07.461398 [0m[FSR] [32mrightFrontRight_scale[0m=1[0m
+[0m[90m01:43:07.461468 [0m[FSR] [32mrightRearLeft_scale[0m=1[0m
+[0m[90m01:43:07.461580 [0m[FSR] [32mrightRearRight_scale[0m=1[0m
+[0m[90m01:43:07.461651 [0m[FSR] [32mleftFrontLeft_offset[0m=0[0m
+[0m[90m01:43:07.461722 [0m[FSR] [32mleftFrontRight_offset[0m=0[0m
+[0m[90m01:43:07.461816 [0m[FSR] [32mleftRearLeft_offset[0m=0[0m
+[0m[90m01:43:07.461896 [0m[FSR] [32mleftRearRight_offset[0m=0[0m
+[0m[90m01:43:07.461966 [0m[FSR] [32mrightFrontLeft_offset[0m=0[0m
+[0m[90m01:43:07.462035 [0m[FSR] [32mrightFrontRight_offset[0m=0[0m
+[0m[90m01:43:07.462104 [0m[FSR] [32mrightRearLeft_offset[0m=0[0m
+[0m[90m01:43:07.462174 [0m[FSR] [32mrightRearRight_offset[0m=0[0m
+[0m[90m01:43:07.462696 [0m[MotionGlobal] [32mmotionCycle[0m=10[0m
+[0m[90m01:43:07.462839 [0m[MotionGlobal] [32mmeasurementDelay[0m=40[0m
+[0m[90m01:43:07.463901 [0m[FileDefinedMotion] Reading: ../Config/SpecialAction/StandUpBackNao.mof[0m
+[0m[90m01:43:07.464835 [0m[FileDefinedMotion] Reading: ../Config/SpecialAction/StandUpFrontNao.mof[0m
+[0m[90m01:43:07.466786 [0m[FileDefinedMotion] Reading: ../Config/SpecialAction/Dive.mof[0m
+[0m[90m01:43:07.469987 [0m[FileDefinedMotion] Reading: ../Config/SpecialAction/DiveSit.mof[0m
+[0m[90m01:43:07.470749 [0m[FileDefinedMotion] Reading: ../Config/SpecialAction/DiveSitKeeper.mof[0m
+[0m[90m01:43:07.471699 [0m[FileDefinedMotion] Reading: ../Config/SpecialAction/SitDown.mof[0m
+[0m[90m01:43:07.471985 [0m[FileDefinedMotion] Reading: ../Config/SpecialAction/StandHigh.mof[0m
+[0m[90m01:43:07.472230 [0m[FileDefinedMotion] Load Special Action Success[0m
+[0m[90m01:43:07.472774 [0m[MotionGlobal] [32mmotionCycle[0m=10[0m
+[0m[90m01:43:07.472886 [0m[MotionGlobal] [32mmeasurementDelay[0m=40[0m
+[0m[90m01:43:07.473180 [0m[Standing] [32mconfig_file[0m=../Config/Nao332/Standing.ini[0m
+[0m[90m01:43:07.473597 [0m[StandHand] [32mstandLeftShoulderPitch[0m=1.57[0m
+[0m[90m01:43:07.473775 [0m[StandHand] [32mstandLeftShoulderRoll[0m=0.13[0m
+[0m[90m01:43:07.473884 [0m[StandHand] [32mstandLeftElbowYaw[0m=0[0m
+[0m[90m01:43:07.473987 [0m[StandHand] [32mstandLeftElbowRoll[0m=0[0m
+[0m[90m01:43:07.474076 [0m[StandHand] [32mstandRighthoulderPitch[0m=1.57[0m
+[0m[90m01:43:07.474150 [0m[StandHand] [32mstandRightShoulderRoll[0m=-0.13[0m
+[0m[90m01:43:07.474220 [0m[StandHand] [32mstandRightElbowYaw[0m=0[0m
+[0m[90m01:43:07.474289 [0m[StandHand] [32mstandRightElbowRoll[0m=0[0m
+[0m[90m01:43:07.474358 [0m[StandCom] [32mstandComRot_x[0m=0[0m
+[0m[90m01:43:07.474429 [0m[StandCom] [32mstandComRot_y[0m=-0.01[0m
+[0m[90m01:43:07.474551 [0m[StandCom] [32mstandComRot_z[0m=0[0m
+[0m[90m01:43:07.474686 [0m[StandCom] [32mstandComPos_x[0m=22.5[0m
+[0m[90m01:43:07.474775 [0m[StandCom] [32mstandComPos_y[0m=0[0m
+[0m[90m01:43:07.474869 [0m[StandCom] [32mstandComPos_z[0m=255[0m
+[0m[90m01:43:07.474944 [0m[StandStiffness] [32mstandFootStiffness[0m=0.75[0m
+[0m[90m01:43:07.475017 [0m[StandStiffness] [32mstandHandStiffness[0m=0.3[0m
+[0m[90m01:43:07.475479 [0m[MotionGlobal] [32mmotionCycle[0m=10[0m
+[0m[90m01:43:07.476745 [0m[MotionGlobal] [32mmeasurementDelay[0m=40[0m
+[0m[90m01:43:07.477144 [0m[WideKick] [32mconfig_file[0m=../Config/Nao332/WideKick.ini[0m
+[0m[90m01:43:07.477568 [0m[Tune] [32mcomFineTune_x[0m=0[0m
+[0m[90m01:43:07.477711 [0m[Tune] [32mcomFineTune_y[0m=0.4[0m
+[0m[90m01:43:07.477807 [0m[Tune] [32mcomFineTune_z[0m=0[0m
+[0m[90m01:43:07.477892 [0m[Tune] [32mangleTune[0m=0.8[0m
+[0m[90m01:43:07.477965 [0m[Tune] [32mtorsoRotX[0m=-0.13[0m
+[0m[90m01:43:07.478037 [0m[Tune] [32mwithdrawLegZ[0m=55[0m
+[0m[90m01:43:07.478109 [0m[Tune] [32mleftFootOutKickTorsoRotY[0m=0[0m
+[0m[90m01:43:07.478179 [0m[Tune] [32mrightFootOutKickTorsoRotY[0m=0[0m
+[0m[90m01:43:07.478248 [0m[Tune] [32mslowMoFactor[0m=1[0m
+[0m[90m01:43:07.478318 [0m[MaxDist] [32mmaxDist_0[0m=10000[0m
+[0m[90m01:43:07.478486 [0m[MaxDist] [32mmaxDist_15[0m=6000[0m
+[0m[90m01:43:07.479428 [0m[MaxDist] [32mmaxDist_30[0m=5000[0m
+[0m[90m01:43:07.479574 [0m[MaxDist] [32mmaxDist_45[0m=6000[0m
+[0m[90m01:43:07.479651 [0m[MaxDist] [32mmaxDist_60[0m=8000[0m
+[0m[90m01:43:07.480067 [0m[Standing] [32mconfig_file[0m=../Config/Nao332/Standing.ini[0m
+[0m[90m01:43:07.480414 [0m[StandHand] [32mstandLeftShoulderPitch[0m=1.57[0m
+[0m[90m01:43:07.480560 [0m[StandHand] [32mstandLeftShoulderRoll[0m=0.13[0m
+[0m[90m01:43:07.480642 [0m[StandHand] [32mstandLeftElbowYaw[0m=0[0m
+[0m[90m01:43:07.480713 [0m[StandHand] [32mstandLeftElbowRoll[0m=0[0m
+[0m[90m01:43:07.480804 [0m[StandHand] [32mstandRighthoulderPitch[0m=1.57[0m
+[0m[90m01:43:07.480893 [0m[StandHand] [32mstandRightShoulderRoll[0m=-0.13[0m
+[0m[90m01:43:07.480964 [0m[StandHand] [32mstandRightElbowYaw[0m=0[0m
+[0m[90m01:43:07.481035 [0m[StandHand] [32mstandRightElbowRoll[0m=0[0m
+[0m[90m01:43:07.481336 [0m[Walking] [32mconfig_file[0m=../Config/Nao332/Walking.ini[0m
+[0m[90m01:43:07.481980 [0m[Speed] [32mzeroSpeed_r[0m=0[0m
+[0m[90m01:43:07.482091 [0m[Speed] [32mzeroSpeed_x[0m=0[0m
+[0m[90m01:43:07.482164 [0m[Speed] [32mzeroSpeed_y[0m=0[0m
+[0m[90m01:43:07.482243 [0m[Speed] [32mmaxSpeed_r[0m=0.3[0m
+[0m[90m01:43:07.482315 [0m[Speed] [32mmaxSpeed_x[0m=80[0m
+[0m[90m01:43:07.482389 [0m[Speed] [32mmaxSpeed_y[0m=40[0m
+[0m[90m01:43:07.482461 [0m[Speed] [32mmaxSpeedBackward_x[0m=-40[0m
+[0m[90m01:43:07.482584 [0m[Speed] [32mmaxSpeedChange_r[0m=0.2[0m
+[0m[90m01:43:07.482661 [0m[Speed] [32mmaxSpeedChange_x[0m=25[0m
+[0m[90m01:43:07.482733 [0m[Speed] [32mmaxSpeedChange_y[0m=20[0m
+[0m[90m01:43:07.482834 [0m[Duration] [32mwalkStepDuration[0m=250[0m
+[0m[90m01:43:07.482912 [0m[Duration] [32mmaxWalkStepDurationY[0m=280[0m
+[0m[90m01:43:07.482985 [0m[Hand] [32mhandMove[0m=0.06[0m
+[0m[90m01:43:07.483057 [0m[Hand] [32mmaxHandMove[0m=0.18[0m
+[0m[90m01:43:07.483129 [0m[WalkLift] [32mwalkLift_z[0m=15[0m
+[0m[90m01:43:07.483201 [0m[WalkLift] [32mmaxWalkLiftX_z[0m=20[0m
+[0m[90m01:43:07.483273 [0m[WalkLift] [32mmaxWalkLiftY_z[0m=25[0m
+[0m[90m01:43:07.483345 [0m[OdometryCalibration] [32mxScale_1[0m=1[0m
+[0m[90m01:43:07.483417 [0m[OdometryCalibration] [32mxScale_2[0m=1[0m
+[0m[90m01:43:07.483489 [0m[OdometryCalibration] [32mxOffset_1[0m=0.0036[0m
+[0m[90m01:43:07.483602 [0m[OdometryCalibration] [32mxOffset_2[0m=0.009[0m
+[0m[90m01:43:07.483710 [0m[OdometryCalibration] [32mxrScale_1[0m=0.976[0m
+[0m[90m01:43:07.483808 [0m[OdometryCalibration] [32mxrScale_2[0m=1.012[0m
+[0m[90m01:43:07.483891 [0m[OdometryCalibration] [32mxrOffset_1[0m=0.00069[0m
+[0m[90m01:43:07.484015 [0m[OdometryCalibration] [32mxrOffset_2[0m=0.0008[0m
+[0m[90m01:43:07.484097 [0m[OdometryCalibration] [32myScale_1[0m=1[0m
+[0m[90m01:43:07.484167 [0m[OdometryCalibration] [32myScale_2[0m=1[0m
+[0m[90m01:43:07.484235 [0m[OdometryCalibration] [32myOffset_1[0m=0[0m
+[0m[90m01:43:07.484303 [0m[OdometryCalibration] [32myOffset_2[0m=0[0m
+[0m[90m01:43:07.484372 [0m[OdometryCalibration] [32myrScale_1[0m=1[0m
+[0m[90m01:43:07.484441 [0m[OdometryCalibration] [32myrScale_2[0m=1[0m
+[0m[90m01:43:07.484553 [0m[OdometryCalibration] [32myrOffset_1[0m=0[0m
+[0m[90m01:43:07.484625 [0m[OdometryCalibration] [32myrOffset_2[0m=0[0m
+[0m[90m01:43:07.484696 [0m[OdometryCalibration] [32mrScale_1[0m=0.819[0m
+[0m[90m01:43:07.484780 [0m[OdometryCalibration] [32mrScale_2[0m=0.919[0m
+[0m[90m01:43:07.484871 [0m[OdometryCalibration] [32mrOffset_1[0m=0.012[0m
+[0m[90m01:43:07.484950 [0m[OdometryCalibration] [32mrOffset_2[0m=0.01[0m
+[0m[90m01:43:07.485492 [0m[MotionGlobal] [32mgravity[0m=0.00980665[0m
+[0m[90m01:43:07.486358 [0m[MotionGlobal] [32mmotionCycle[0m=10[0m
+[0m[90m01:43:07.486579 [0m[MotionGlobal] [32mmeasurementDelay[0m=40[0m
+[0m[90m01:43:07.489632 [0m[Standing] [32mconfig_file[0m=../Config/Nao332/Standing.ini[0m
+[0m[90m01:43:07.490058 [0m[StandCom] [32mstandComPos_x[0m=22.5[0m
+[0m[90m01:43:07.490168 [0m[StandCom] [32mstandComPos_y[0m=0[0m
+[0m[90m01:43:07.490241 [0m[StandCom] [32mstandComPos_z[0m=255[0m
+[0m[90m01:43:07.490628 [0m[Walking] [32mconfig_file[0m=../Config/Nao332/Walking.ini[0m
+[0m[90m01:43:07.491234 [0m[Speed] [32mzeroSpeed_r[0m=0[0m
+[0m[90m01:43:07.491330 [0m[Speed] [32mzeroSpeed_x[0m=0[0m
+[0m[90m01:43:07.491401 [0m[Speed] [32mzeroSpeed_y[0m=0[0m
+[0m[90m01:43:07.491471 [0m[Duration] [32mwalkStepDuration[0m=250[0m
+[0m[90m01:43:07.491991 [0m[MotionGlobal] [32mgravity[0m=0.00980665[0m
+[0m[90m01:43:07.492110 [0m[MotionGlobal] [32mmotionCycle[0m=10[0m
+[0m[90m01:43:07.492175 [0m[MotionGlobal] [32mmeasurementDelay[0m=40[0m
+[0m[90m01:43:07.492458 [0m[Standing] [32mconfig_file[0m=../Config/Nao332/Standing.ini[0m
+[0m[90m01:43:07.492810 [0m[StandCom] [32mstandComPos_x[0m=22.5[0m
+[0m[90m01:43:07.492915 [0m[StandCom] [32mstandComPos_y[0m=0[0m
+[0m[90m01:43:07.492988 [0m[StandCom] [32mstandComPos_z[0m=255[0m
+[0m[90m01:43:07.493285 [0m[Walking] [32mconfig_file[0m=../Config/Nao332/Walking.ini[0m
+[0m[90m01:43:07.493979 [0m[Speed] [32mzeroSpeed_r[0m=0[0m
+[0m[90m01:43:07.494118 [0m[Speed] [32mzeroSpeed_x[0m=0[0m
+[0m[90m01:43:07.494213 [0m[Speed] [32mzeroSpeed_y[0m=0[0m
+[0m[90m01:43:07.494305 [0m[Duration] [32mwalkStepDuration[0m=250[0m
+[0m[90m01:43:07.494789 [0m[MotionGlobal] [32mmotionCycle[0m=10[0m
+[0m[90m01:43:07.494911 [0m[MotionGlobal] [32mmeasurementDelay[0m=40[0m
+[0m[90m01:43:07.495200 [0m[Standing] [32mconfig_file[0m=../Config/Nao332/Standing.ini[0m
+[0m[90m01:43:07.495490 [0m[StandStiffness] [32mstandHandStiffness[0m=0.3[0m
+[0m[90m01:43:07.495774 [0m[StandStiffness] [32mstandFootStiffness[0m=0.75[0m
+[0m[90m01:43:07.496912 [0m[StandCom] [32mstandComRot_x[0m=0[0m
+[0m[90m01:43:07.497015 [0m[StandCom] [32mstandComRot_y[0m=-0.01[0m
+[0m[90m01:43:07.497087 [0m[StandCom] [32mstandComRot_z[0m=0[0m
+[0m[90m01:43:07.497159 [0m[StandHand] [32mstandLeftShoulderPitch[0m=1.57[0m
+[0m[90m01:43:07.497230 [0m[StandHand] [32mstandLeftShoulderRoll[0m=0.13[0m
+[0m[90m01:43:07.497300 [0m[StandHand] [32mstandLeftElbowYaw[0m=0[0m
+[0m[90m01:43:07.497369 [0m[StandHand] [32mstandLeftElbowRoll[0m=0[0m
+[0m[90m01:43:07.497440 [0m[StandHand] [32mstandRighthoulderPitch[0m=1.57[0m
+[0m[90m01:43:07.497565 [0m[StandHand] [32mstandRightShoulderRoll[0m=-0.13[0m
+[0m[90m01:43:07.497638 [0m[StandHand] [32mstandRightElbowYaw[0m=0[0m
+[0m[90m01:43:07.497707 [0m[StandHand] [32mstandRightElbowRoll[0m=0[0m
+[0m[90m01:43:07.498127 [0m[Walking] [32mconfig_file[0m=../Config/Nao332/Walking.ini[0m
+[0m[90m01:43:07.498979 [0m[Speed] [32mzeroSpeed_r[0m=0[0m
+[0m[90m01:43:07.499106 [0m[Speed] [32mzeroSpeed_x[0m=0[0m
+[0m[90m01:43:07.499186 [0m[Speed] [32mzeroSpeed_y[0m=0[0m
+[0m[90m01:43:07.499259 [0m[Speed] [32mmaxSpeed_r[0m=0.3[0m
+[0m[90m01:43:07.499331 [0m[Speed] [32mmaxSpeed_x[0m=80[0m
+[0m[90m01:43:07.499444 [0m[Speed] [32mmaxSpeed_y[0m=40[0m
+[0m[90m01:43:07.499567 [0m[Speed] [32mmaxSpeedBackward_x[0m=-40[0m
+[0m[90m01:43:07.499644 [0m[Speed] [32mmaxSpeedChange_r[0m=0.2[0m
+[0m[90m01:43:07.499715 [0m[Speed] [32mmaxSpeedChange_x[0m=25[0m
+[0m[90m01:43:07.499800 [0m[Speed] [32mmaxSpeedChange_y[0m=20[0m
+[0m[90m01:43:07.499933 [0m[Instability] [32mleftDivideMin[0m=-3.05408[0m
+[0m[90m01:43:07.500010 [0m[Instability] [32mleftDivideMax[0m=0.280269[0m
+[0m[90m01:43:07.500083 [0m[Instability] [32mrightDivideMin[0m=-2.13496[0m
+[0m[90m01:43:07.500154 [0m[Instability] [32mrightDivideMax[0m=1.23382[0m
+[0m[90m01:43:07.500226 [0m[Instability] [32mleftMinusMin[0m=-1.79978[0m
+[0m[90m01:43:07.500298 [0m[Instability] [32mleftMinusMax[0m=0.446529[0m
+[0m[90m01:43:07.500411 [0m[Instability] [32mrightMinusMin[0m=-1.77344[0m
+[0m[90m01:43:07.500486 [0m[Instability] [32mrightMinusMax[0m=1.64953[0m
+[0m[90m01:43:07.500594 [0m[Instability] [32mextraRatio[0m=0.6[0m
+[0m[I] 5425 qimessaging.session: Session listener created on tcp://0.0.0.0:0
+[I] 5425 qimessaging.transportserver: TransportServer will listen on: tcp://127.0.0.1:59520
+[I] 5425 qimessaging.transportserver: TransportServer will listen on: tcp://10.0.15.132:59520
+sound receiver created
+start detection
+[90m01:43:15.246224 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:27.326841 [1;36m[Manual] You pressed 'z'![0m
+[0m0,0,0,0,2,0,2,0,0,0,0,2,2,6,8,4,0,-10,-10,0,2,0,2,0,-2,0,4,2,2,0,2,2,0,0,0,0,0,0,0,2,2,0,0,2,2,2,0,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,6,8,6,4,2,0,-2,0,0,0,0,-2,-4,-6,-6,-6,-4,-2,2,2,4,6,10,10,4,-2,-6,-6,-4,-4,-2,-2,-2,6,8,8,10,12,12,10,8,8,8,8,8,8,[90m01:43:29.131703 [0m[Odometry] step 1, odometry = (0, 0, -0.537093)[0m
+[0m10,12,10,10,8,6,4,4,2,2,2,2,2,4,6,8,6,4,2,-2,0,0,0,0,0,0,-2,-2,-4,-4,-4,-4,-4,-4,-4,-2,-4,-6,-4,-4,-4,-4,-4,-2,-2,-4,-4,-2,-2,-2,-2,-2,0,2,0,-2,0,2,-2,0,0,2,-2,-2,-4,2,-2,-6,-8,-6,-4,-10,-14,-12,0,-2,-4,-16,-8,-2,0,-6,-12,-2,2,0,-8,2,2,-14,-8,-12,-28,[90m01:43:30.506215 [1;36m[Manual] You pressed 'J'![0m
+[0m-12,-2,26,-10,-20,-16,14,-12,-30,-26,12,6,-14,-24,0,0,-6,-16,-6,-2,-2,-2,-2,[90m01:43:30.808227 [1;36m[Manual] You pressed 'J'![0m
+[0m2,0,0,[90m01:43:31.734649 [1;36m[Manual] You pressed 'L'![0m
+[0m-2,-2,-10,-8,-8,-2,-4,-6,-2,-6,4,-8,-6,-6,6,-2,-8,-6,-6,-8,-8,-8,-8,-6,-8,-12,-16,-16,-18,-20,-14,-14,-20,[90m01:43:32.860406 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:33.163571 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:34.291192 [1;36m[Manual] You pressed 'L'![0m
+[0m10,0,-6,-4,-2,-8,-2,0,-8,-14,-6,-718,-696,-742,-726,-6,-6,-22,-16,-12,-8,-12,-12,-10,-8,-8,-6,-8,-10,-14,-14,-18,-22,[90m01:43:35.516634 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:35.828353 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:36.853673 [1;36m[Manual] You pressed 'L'![0m
+[0m-1892,-1952,-38,-12,-14,-12,-6,-354,-36,-736,-8,-12,-4,-12,-758,-742,-6,-8,-4,-4,-2,0,-2,-8,-8,-8,-6,-8,-8,-12,-8,-12,-14,[90m01:43:38.082650 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:38.322652 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:39.410277 [1;36m[Manual] You pressed 'L'![0m
+[0m-14,-8,-4,-4,-6,-2,-10,-12,-8,-2,-4,-8,0,-4,-4,-12,-14,-8,-6,-6,-6,-10,-12,-8,-8,-8,-14,-14,-10,-20,-20,-18,-32,[90m01:43:40.645265 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:40.928359 [1;36m[Manual] You pressed 'J'![0m
+[0m[90m01:43:42.072657 [1;36m[Manual] You pressed 'L'![0m
+[0m0,2,2,-4,-2,-2,0,-6,2,-4,-8,-6,-4,-6,-12,-8,-6,-6,0,-6,-4,-6,-6,-4,-2,-8,-10,-12,-8,-8,-8,-10,-10,[90m01:43:43.915396 [1;36m[Manual] You pressed 'z'![0m
+[0m[90m01:43:45.726006 [0m[Odometry] step 2, odometry = (0, 0, -1.386)[0m
+[0m[90m01:43:46.481479 [1;36m[Manual] You pressed 'ESC'![0m
+[0m
