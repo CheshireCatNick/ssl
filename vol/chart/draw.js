@@ -65,7 +65,15 @@ function output(div, dataName) {
   d.innerHTML += `x: ${soundCenter.x} y: ${soundCenter.y}<br/>`;
   d.innerHTML += `angle: ${soundCenter.angle}<br/>`;
   d.innerHTML += `q: ${soundCenter.q}<br/>`;
+  d.innerHTML += `ratio: ${soundCenter.ratio}<br/>`;
   d.innerHTML += `awkward: ${soundCenter.awk}`;
+
+  const bya = byAxis(intensity);
+  console.log(bya);
+  d.innerHTML += '<h3>by axis<h3/>';
+  d.innerHTML += `axis: ${bya.axis}<br/>`;
+  d.innerHTML += `ratio: ${bya.ratio}<br/>`;
+  d.innerHTML += `awkward: ${bya.awk}`;
 
   let result = twoMic(intensity);
   console.log(result);

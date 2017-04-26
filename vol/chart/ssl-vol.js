@@ -69,12 +69,12 @@ function calcSoundCenter(intensity) {
     awk = false;
     q = maxL;
   }
-
   return {
     x: round(soundCenter.x),
     y: round(soundCenter.y),
     angle: round(calcAngle(soundCenter.x, soundCenter.y)),
     q: q,
+    ratio: round(labelData[3].v / labelData[2].v),
     awk: awk
   };
 }
@@ -146,5 +146,32 @@ function oneMic(intensity) {
     result: result.slice(1),
     q: indexOfMax(result),
     ratio: round(calcRatio(result))
+  };
+}
+function byAxis(intensity) {
+  const labelData = [
+    { l: 1, v: intensity[1] + intensity[4] },
+    { l: 2, v: intensity[1] + intensity[2] },
+    { l: 3, v: intensity[2] + intensity[3] },
+    { l: 4, v: intensity[3] + intensity[4] },
+  ];
+  labelData.sort((a, b) => a.v - b.v);
+  const maxL = labelData[3].l;
+  const secL = labelData[2].l;
+  let a;
+  let awk;
+  console.log(maxL, secL);
+  if ((maxL + 1) % 4 !== secL % 4 && (maxL + 3) % 4 !== secL % 4){
+    awk = true;
+    a = labelData[1].l;
+  }
+  else {
+    awk = false;
+    a = maxL;
+  }
+  return {
+    axis: a,
+    ratio: round(labelData[3].v / labelData[2].v),
+    awk: awk
   };
 }
