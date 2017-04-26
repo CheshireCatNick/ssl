@@ -64,6 +64,7 @@ function output(div, dataName) {
   d.innerHTML += '<h3>sound center<h3/>';
   d.innerHTML += `x: ${soundCenter.x} y: ${soundCenter.y}<br/>`;
   d.innerHTML += `angle: ${soundCenter.angle}<br/>`;
+  d.innerHTML += '<h3>by quadrant<h3/>';  
   d.innerHTML += `q: ${soundCenter.q}<br/>`;
   d.innerHTML += `ratio: ${soundCenter.ratio}<br/>`;
   d.innerHTML += `awkward: ${soundCenter.awk}`;
