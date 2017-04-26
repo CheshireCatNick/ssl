@@ -64,7 +64,9 @@ function output(div, dataName) {
   d.innerHTML += '<h3>sound center<h3/>';
   d.innerHTML += `x: ${soundCenter.x} y: ${soundCenter.y}<br/>`;
   d.innerHTML += `angle: ${soundCenter.angle}<br/>`;
-  
+  d.innerHTML += `q: ${soundCenter.q}<br/>`;
+  d.innerHTML += `awkward: ${soundCenter.awk}`;
+
   let result = twoMic(intensity);
   console.log(result);
   d.innerHTML += '<h3>twoMic<h3/>';

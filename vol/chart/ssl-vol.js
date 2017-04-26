@@ -20,7 +20,9 @@ const micD = {
   y: -2.15
 };
 const mics = [undefined, micA, micB, micC, micD];
-
+function round(a) {
+  return Math.round(a * 10) / 10;
+}
 function calcIntensity(vols) {
   let intensity = [0, 0, 0, 0, 0];
   for (let f in vols[0]) 
@@ -47,10 +49,33 @@ function calcSoundCenter(intensity) {
   }
   soundCenter.x /= intensitySum;
   soundCenter.y /= intensitySum;
+  const labelData = [
+    { l: 1, v: intensity[1] },
+    { l: 2, v: intensity[2] },
+    { l: 3, v: intensity[3] },
+    { l: 4, v: intensity[4] },
+  ];
+  labelData.sort((a, b) => a.v - b.v);
+  const maxL = labelData[3].l;
+  const secL = labelData[2].l;
+  let q;
+  let awk;
+  console.log(maxL, secL);
+  if ((maxL + 1) % 4 !== secL % 4 && (maxL + 3) % 4 !== secL % 4){
+    awk = true;
+    q = labelData[1].l;
+  }
+  else {
+    awk = false;
+    q = maxL;
+  }
+
   return {
-    x: soundCenter.x,
-    y: soundCenter.y,
-    angle: calcAngle(soundCenter.x, soundCenter.y)
+    x: round(soundCenter.x),
+    y: round(soundCenter.y),
+    angle: round(calcAngle(soundCenter.x, soundCenter.y)),
+    q: q,
+    awk: awk
   };
 }
 function indexOfMax(arr) {
@@ -106,7 +131,7 @@ function twoMic(intensity) {
   return {
     result: result.slice(1),
     q: indexOfMax(result),
-    ratio: calcRatio(result)
+    ratio: round(calcRatio(result))
   };
 }
 function oneMic(intensity) {
@@ -120,6 +145,6 @@ function oneMic(intensity) {
   return {
     result: result.slice(1),
     q: indexOfMax(result),
-    ratio: calcRatio(result)
+    ratio: round(calcRatio(result))
   };
 }
