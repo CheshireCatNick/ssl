@@ -2,7 +2,8 @@
 const vols = require('./data/volume/' + process.argv[2]);
 const channelNum = 4;
 const frameNum = vols[0].length;
-
+// all of the index is sorted by quadrant
+// [0, q1, q2, q3, q4]
 const micA = {
   x: 3.09,
   y: 2.06
@@ -19,9 +20,40 @@ const micD = {
   x: 5.58,
   y: -2.15
 };
-// sort by channel
-const mics = [micC, micD, micB, micA];
+const mics = [undefined, micA, micB, micC, micD];
 
+function calcIntensity() {
+  let intensity = [0, 0, 0, 0, 0];
+  for (let f in vols[0]) 
+    for (let c = 0; c < channelNum; c++) 
+      intensity[c + 1] += vols[c][f];
+  return [0, intensity[4], intensity[3], intensity[1], intensity[2]];
+}
+function calcAngle(x, y) {
+  const rad = Math.atan2(y, x);
+  const deg = rad * (180 / Math.PI);
+  return deg;
+}
+function calcSoundCenter(intensity) {
+  const soundCenter = {
+    x: 0,
+    y: 0
+  };
+  let intensitySum = 0;
+  for (let i = 1; i <= 4; i++) {
+    let mic = mics[i];
+    soundCenter.x += mic.x * intensity[i];
+    soundCenter.y += mic.y * intensity[i];
+    intensitySum += intensity[i];
+  }
+  soundCenter.x /= intensitySum;
+  soundCenter.y /= intensitySum;
+  console.log('center method');
+  console.log('avg = ', soundCenter);
+  console.log(calcAngle(soundCenter.x, soundCenter.y));
+  console.log('');
+  return soundCenter;
+}
 function indexOfMax(arr) {
   if (arr.length === 0) return -1;
   let max = arr[0];
@@ -33,109 +65,68 @@ function indexOfMax(arr) {
     }
   return maxIndex;
 }
-function calcSoundCenter(intensity) {
-  const soundCenter = {
-    x: 0,
-    y: 0
-  };
-  let intensitySum = 0
-  for (let i in mics) {
-    let mic = mics[i]
-    soundCenter.x += mic.x * intensity[i];
-    soundCenter.y += mic.y * intensity[i];
-    intensitySum += intensity[i];
-  }
-  soundCenter.x /= intensitySum;
-  soundCenter.y /= intensitySum;
-  return soundCenter;
-}
-function calcAngle(x, y) {
-  const rad = Math.atan2(y, x);
-  const deg = rad * (180 / Math.PI);
-  return deg;
-}
-function maxProp(a) {
+function calcRatio(a) {
   // relative max props
   // max props if min props = 0
   a = a.slice(1);
-  let min = a[0];
-  let max = a[0];
-  for (let n of a) {
-    min = (n < min) ? n : min;
-    max = (n > max) ? n : max;
+  a.sort((a, b) => a - b);
+  const amin = Math.abs(a[0]);
+  for (let i in a)
+    a[i] += amin;
+  return a[3] / a[2];
+}
+function twoMic(intensity) {
+  // threshold?
+  const hi3412 = 550000000;
+  const hi2314 = 0;
+  const sc3412 = intensity[3] + intensity[4] - (intensity[1] + intensity[2]);
+  const sc2314 = intensity[2] + intensity[3] - (intensity[1] + intensity[4]) + hi2314;
+
+  let result = [0, 0, 0, 0, 0];
+  if (sc3412 > 0) {
+    result[3] += sc3412;
+    result[4] += sc3412;
   }
-  const shift = Math.abs(min);
-  console.log(min, max, shift);
-  let sum = 0;
-  for (let n of a)
-    sum += n;
-  sum += shift * channelNum;
-  return 0;
+  else {
+    result[1] -= sc3412;
+    result[2] -= sc3412;
+  }
+  if (sc2314 > 0) {
+    result[2] += sc2314;
+    result[3] += sc2314;
+  }
+  else {
+    result[1] -= sc2314;
+    result[4] -= sc2314;
+  }
+  /*
+  result[1] += -sc1234 - sc1324;
+  result[2] += -sc1234 + sc1324;
+  result[3] += sc1234 + sc1324;
+  result[4] += sc1234 - sc1324;*/
+  console.log('sum up two mics method');
+  console.log(result.slice(1));
+  console.log('q', indexOfMax(result));
+  console.log('ratio', calcRatio(result));
+  console.log('');
 }
-let avgsc = {
-  x: 0,
-  y: 0
-};
-for (let f in vols[0]) {
-  let intensity = [];
-  for (let c in vols) 
-    intensity.push(vols[c][f]);
-  let tsc = calcSoundCenter(intensity);
-  //console.log(tsc)
-  avgsc.x += tsc.x;
-  avgsc.y += tsc.y;
+function oneMic(intensity) {
+  let result = [0, 0, 0, 0, 0];
+  const hi = [];
+  for (let i = 1; i <= channelNum; i++) {
+    result[i] = intensity[i] * 4;
+    for (let j = 1; j <= channelNum; j++)
+      result[i] -= (intensity[j] + 0);
+  }
+  console.log('single mic method');
+  console.log(result.slice(1));
+  console.log('q', indexOfMax(result));
+  console.log('ratio', calcRatio(result));
+  console.log('');
 }
-avgsc.x /= frameNum;
-avgsc.y /= frameNum;
-console.log('center method');
-console.log('avg = ', avgsc);
-console.log(calcAngle(avgsc.x, avgsc.y));
+// main
+const intensity = calcIntensity();
+calcSoundCenter(intensity);
+twoMic(intensity);
+oneMic(intensity);
 
-let intensity = [0, 0, 0, 0, 0];
-for (let f in vols[0]) {
-  for (let c = 0; c < channelNum; c++) 
-    intensity[c + 1] += vols[c][f];
-}
-let result = [0, 0, 0, 0, 0];
-// threshold?
-const hi1234 = 550000000;
-const hi1324 = 0;
-const sc1234 = intensity[1] + intensity[2] - (intensity[3] + intensity[4]);
-const sc1324 = intensity[1] + intensity[3] - (intensity[2] + intensity[4]) + hi1324;
-
-if (sc1234 > 0) {
-  result[3] += sc1234;
-  result[4] += sc1234;
-}
-else {
-  result[1] -= sc1234;
-  result[2] -= sc1234;
-}
-if (sc1324 > 0) {
-  result[2] += sc1324;
-  result[3] += sc1324;
-}
-else {
-  result[1] -= sc1324;
-  result[4] -= sc1324;
-}
-/*
-result[1] += -sc1234 - sc1324;
-result[2] += -sc1234 + sc1324;
-result[3] += sc1234 + sc1324;
-result[4] += sc1234 - sc1324;*/
-console.log('sum two mics method');
-console.log(result);
-console.log(indexOfMax(result));
-
-// channel intensity to coordinate intencity
-const cintensity = [0, intensity[4], intensity[3], intensity[1], intensity[2]];
-const hi = [];
-for (let i = 1; i <= channelNum; i++) {
-  result[i] = cintensity[i] * 4;
-  for (let j = 1; j <= channelNum; j++)
-    result[i] -= (cintensity[j] + 0);
-}
-console.log('single mic method');
-console.log(result);
-console.log(indexOfMax(result));
