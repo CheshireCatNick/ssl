@@ -20,7 +20,9 @@ const micD = {
   y: -2.15
 };
 const mics = [undefined, micA, micB, micC, micD];
-
+function round(a) {
+  return Math.round(a * 10) / 10;
+}
 function calcIntensity(vols) {
   let intensity = [0, 0, 0, 0, 0];
   for (let f in vols[0]) 
@@ -47,14 +49,33 @@ function calcSoundCenter(intensity) {
   }
   soundCenter.x /= intensitySum;
   soundCenter.y /= intensitySum;
-  console.log('center method');
-  console.log('avg = ', soundCenter);
-  console.log(calcAngle(soundCenter.x, soundCenter.y));
-  console.log('');
-  console.log('');
+  const labelData = [
+    { l: 1, v: intensity[1] },
+    { l: 2, v: intensity[2] },
+    { l: 3, v: intensity[3] },
+    { l: 4, v: intensity[4] },
+  ];
+  labelData.sort((a, b) => a.v - b.v);
+  const maxL = labelData[3].l;
+  const secL = labelData[2].l;
+  let q;
+  let awk;
+  console.log(maxL, secL);
+  if ((maxL + 1) % 4 !== secL % 4 && (maxL + 3) % 4 !== secL % 4){
+    awk = true;
+    q = labelData[1].l;
+  }
+  else {
+    awk = false;
+    q = maxL;
+  }
   return {
-    soundCenter: soundCenter,
-    angle: calcAngle(soundCenter.x, soundCenter.y)
+    x: round(soundCenter.x),
+    y: round(soundCenter.y),
+    angle: round(calcAngle(soundCenter.x, soundCenter.y)),
+    q: q,
+    ratio: round(labelData[3].v / labelData[2].v),
+    awk: awk
   };
 }
 function indexOfMax(arr) {
@@ -128,3 +149,39 @@ function oneMic(intensity) {
     ratio: calcRatio(result)
   };
 }
+function byAxis(intensity) {
+  const labelData = [
+    { l: 1, v: intensity[1] + intensity[4] },
+    { l: 2, v: intensity[1] + intensity[2] },
+    { l: 3, v: intensity[2] + intensity[3] },
+    { l: 4, v: intensity[3] + intensity[4] },
+  ];
+  labelData.sort((a, b) => a.v - b.v);
+  const maxL = labelData[3].l;
+  const secL = labelData[2].l;
+  const ratio = round(labelData[3].v / labelData[2].v);
+  let a;
+  let awk;
+  console.log(maxL, secL);
+  if ((maxL + 1) % 4 !== secL % 4 && (maxL + 3) % 4 !== secL % 4){
+    awk = true;
+    if (ratio <= 1.1)
+      a = labelData[1].l;
+    else
+      a = maxL;
+  }
+  else {
+    awk = false;
+    a = maxL;
+  }
+  return {
+    axis: a,
+    ratio: ratio,
+    awk: awk
+  };
+}
+const intensity = calcIntensity(vols);
+console.log('sound center');
+console.log(calcSoundCenter(intensity));
+console.log('by axis');
+console.log(byAxis(intensity));

@@ -96,7 +96,8 @@ function draw(angle) {
   output('r2', angle + '-2');
   let c3 = new Chart('c3', makeChartData('near 1', vols[angle + '-n']));
   output('r3', angle + '-n');
-  //let c4 = new Chart('c4', makeChartData('near 2', vols[angle + '']));
+  let c4 = new Chart('c4', makeChartData('near 2', vols[angle + '-n1']));
+  output('r4', angle + '-n1');
 
 
 
