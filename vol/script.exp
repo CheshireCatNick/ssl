@@ -1,8 +1,8 @@
 #!/usr/bin/expect
 
 # settings
-set receiverIP "10.15.15.132"
-set senderIP "10.15.14.131"
+set receiverIP "10.0.15.132"
+set senderIP "10.0.15.131"
 set startTime 0
 set playSound 1
 set shutdownRobot 0
