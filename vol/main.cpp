@@ -6,7 +6,7 @@
 #define MAXFILENAME 200
 
 int testNum = 1;
-int maxBufferNum = 10;
+int maxBufferNum = 100;
 int channelNum = 4;
 int sampleNum = 4096;
 float** buffer;

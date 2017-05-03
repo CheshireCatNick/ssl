@@ -90,6 +90,20 @@ function output(div, dataName) {
 }
 function draw(angle) {
   createCanvas();
+  if (angle === 'temp') {
+    let dataNames = ['long-back', 'long-front'];
+    console.log(vols[dataNames[1]][2].length, vols[dataNames[1]][3].length);
+    let c1 = new Chart('c1', makeChartData(dataNames[0], vols[dataNames[0]]));
+    output('r1', dataNames[0]);
+    let c2 = new Chart('c2', makeChartData(dataNames[1], vols[dataNames[1]]));
+    output('r2', dataNames[1]);
+    /*
+    let c3 = new Chart('c3', makeChartData('near 1', vols[angle + '-n']));
+    output('r3', angle + '-n');
+    let c4 = new Chart('c4', makeChartData('near 2', vols[angle + '-n1']));
+    output('r4', angle + '-n1');*/
+    return;
+  }
   let c1 = new Chart('c1', makeChartData('test 1', vols[angle + '-1']));
   output('r1', angle + '-1');
   let c2 = new Chart('c2', makeChartData('test 2', vols[angle + '-2']));
@@ -98,53 +112,4 @@ function draw(angle) {
   output('r3', angle + '-n');
   let c4 = new Chart('c4', makeChartData('near 2', vols[angle + '-n1']));
   output('r4', angle + '-n1');
-
-
-
-  /*
-  if (fix === 'channel') {
-    let channel;
-    switch (option) {
-      case 'ch1':
-        channel = 0;
-        break;
-      case 'ch2':
-        channel = 1;
-        break;
-      case 'ch3':
-        channel = 2;
-        break;
-      case 'ch4':
-        channel = 3;
-        break;
-    }
-    // data[0] is degree 0 of every test
-    let data = [];
-    for (let i in angles) data.push([]);
-
-    for (let i in angles) 
-      for (let test of freqData[angles[i]]) 
-        data[i].push(test[channel]);
-    
-    let freqChart1 = new Chart('c1', makeChartData('0 deg', data[0]));
-    let freqChart2 = new Chart('c2', makeChartData('90 deg', data[1]));
-    let freqChart3 = new Chart('c3', makeChartData('180 deg', data[2]));
-    let freqChart4 = new Chart('c4', makeChartData('270 deg', data[3]));
-  }
-  if (fix === 'angle') {
-    const angle = option;
-    // data[0] is channel 1 of every test
-    let data = [];
-    
-    for (let channel = 0; channel < 4; channel++)
-      data.push([]);
-    for (let testCase of freqData[angle]) {
-      for (let channel = 0; channel < 4; channel++)
-        data[channel].push(testCase[channel]);
-    }
-    let freqChart1 = new Chart('c1', makeChartData('channel 1', data[0]));
-    let freqChart2 = new Chart('c2', makeChartData('channel 2', data[1]));
-    let freqChart3 = new Chart('c3', makeChartData('channel 3', data[2]));
-    let freqChart4 = new Chart('c4', makeChartData('channel 4', data[3]));
-  }*/
 }
