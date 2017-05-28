@@ -1,7 +1,7 @@
 #include "../fft/kiss_fftr.h"
 #include <stdio.h>
 
-#define MAXLINE 2000000
+#define MAXLINE 7000000
 #define MAXFRAMENUM 200
 #define MAXFILENAME 200
 
@@ -124,19 +124,21 @@ void getVol(float* buffer, int bufferSize, double* vols) {
 
 void readData(FILE* fp) {
   // read data into buffer
-  char line[channelNum][MAXLINE];
+  char line[MAXLINE];
   int j = 0;
   char* token;
   for (int i = 0; i < channelNum; i++) {
-    fgets(line[i], MAXLINE, fp);
+    fgets(line, MAXLINE, fp);
     j = 0;
-    token = strtok(line[i], " ");
+    token = strtok(line, " ");
     while (token != NULL) {
       buffer[i][j] = atof(token);
+      //puts(token);
       token = strtok(NULL, " ");
       j++;
     }
     bufferSize[i] = j;
+    printf("channel %d buffer size %d\n", i + 1, j);
   }
 }
 
@@ -161,6 +163,7 @@ int main(int argv, char* args[]) {
   while (testNum--) {
     //printf("%d\n", testNum);
     readData(inputFP);
+    
     if (printFreq) fputs("[", outputFP);
     for (int channelIndex = 0; channelIndex < channelNum; channelIndex++) {
       printf("ch%d\n", channelIndex + 1);

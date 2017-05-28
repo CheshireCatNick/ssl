@@ -34,7 +34,9 @@ sleep 2
 
 # start receiver Motion
 send "./control.sh\r"
-sleep 3
+set timeout -1
+expect "finished"
+sleep 5
 send "\x1b"
 sleep 0.5
 close

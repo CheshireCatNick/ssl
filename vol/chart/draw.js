@@ -88,20 +88,42 @@ function output(div, dataName) {
   d.innerHTML += `q: ${result.q}<br/>`;
   d.innerHTML += `ratio: ${result.ratio}<br/>`;
 }
+function drawData(dataNames) {
+  createCanvas();
+  let c1 = new Chart('c1', makeChartData(dataNames[0], vols[dataNames[0]]));
+  output('r1', dataNames[0]);
+  let c2 = new Chart('c2', makeChartData(dataNames[1], vols[dataNames[1]]));
+  output('r2', dataNames[1]);
+  let c3 = new Chart('c3', makeChartData(dataNames[2], vols[dataNames[2]]));
+  output('r3', dataNames[2]);
+  let c4 = new Chart('c4', makeChartData(dataNames[3], vols[dataNames[3]]));
+  output('r4', dataNames[3]);
+  return;
+}
 function draw(angle) {
   createCanvas();
   if (angle === 'temp') {
-    let dataNames = ['long-back', 'long-front'];
-    console.log(vols[dataNames[1]][2].length, vols[dataNames[1]][3].length);
+    //let dataNames = ['l-0-1', 'l-90-1', 'l-180-1', 'l-270-1'];
+    //let dataNames = ['l-90-1', 'l-90-2', 'l-270-1', 'l-270-2'];
+    //let dataNames = ['w-l-90-1', 'w-l-90-2', 'w-l-270-1', 'w-l-270-2'];
+    //let dataNames = ['th-l-90-1', 'th-l-90-2', 'th-l-90-3', 'th-l-90-4'];
+    //let dataNames = ['th-l-270-1', 'th-l-270-2', 'th-l-270-3', 'th-l-270-4'];
+    //let dataNames = ['s-90-1', 's-90-2', 's-90-3'];
+    //let dataNames = ['s-270-1', 's-270-2', 's-270-3'];
+    //let dataNames = ['sth-90-1', 'sth-90-2', 'sth-90-3', 'sth-90-4'];
+    //let dataNames = ['sth-270-1', 'sth-270-2', 'sth-270-3', 'sth-270-4'];
+    //let dataNames = ['sr-90-1', 'sr-90-2', 'sr-90-3'];
+    //let dataNames = ['sr-270-1', 'sr-270-2', 'sr-270-3', 'sr-270-4'];
+    let dataNames = ['srth-90-1', 'srth-90-2', 'srth-270-1', 'srth-270-2'];
+
     let c1 = new Chart('c1', makeChartData(dataNames[0], vols[dataNames[0]]));
     output('r1', dataNames[0]);
     let c2 = new Chart('c2', makeChartData(dataNames[1], vols[dataNames[1]]));
     output('r2', dataNames[1]);
-    /*
-    let c3 = new Chart('c3', makeChartData('near 1', vols[angle + '-n']));
-    output('r3', angle + '-n');
-    let c4 = new Chart('c4', makeChartData('near 2', vols[angle + '-n1']));
-    output('r4', angle + '-n1');*/
+    let c3 = new Chart('c3', makeChartData(dataNames[2], vols[dataNames[2]]));
+    output('r3', dataNames[2]);
+    let c4 = new Chart('c4', makeChartData(dataNames[3], vols[dataNames[3]]));
+    output('r4', dataNames[3]);
     return;
   }
   let c1 = new Chart('c1', makeChartData('test 1', vols[angle + '-1']));

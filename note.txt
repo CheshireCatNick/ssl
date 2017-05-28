@@ -31,3 +31,5 @@ starttime = 822161930, first buffer = 822330483, delta = 168553
 
 case1: some data is lost, give up testing (or test again)
 case2: skip this buffer
+
+buffer is 4096 sample in 0.085 s
