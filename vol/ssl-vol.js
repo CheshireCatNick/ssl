@@ -149,6 +149,17 @@ function oneMic(intensity) {
     ratio: calcRatio(result)
   };
 }
+function calcSD(data) {
+  let sum = 0;
+  let ssum = 0;
+  const N = data.length;
+  for (let d of data) { 
+    sum += d;
+    ssum += d * d;
+  }
+  const avg = sum / N;
+  return Math.sqrt(ssum / N - avg * avg);
+}
 function byAxis(intensity) {
   const labelData = [
     { l: 1, v: intensity[1] + intensity[4] },
@@ -162,7 +173,8 @@ function byAxis(intensity) {
   const ratio = round(labelData[3].v / labelData[2].v);
   let a;
   let awk;
-  console.log(maxL, secL);
+  //console.log(maxL, secL);
+
   if ((maxL + 1) % 4 !== secL % 4 && (maxL + 3) % 4 !== secL % 4){
     awk = true;
     if (ratio <= 1.1)
@@ -176,12 +188,39 @@ function byAxis(intensity) {
   }
   return {
     axis: a,
+    volDiff: labelData[3].v - labelData[2].v,
     ratio: ratio,
     awk: awk
   };
 }
 const intensity = calcIntensity(vols);
-console.log('sound center');
-console.log(calcSoundCenter(intensity));
-console.log('by axis');
-console.log(byAxis(intensity));
+//console.log('sound center');
+//console.log(calcSoundCenter(intensity));
+const devideNum = 7;
+const frameLength = Math.floor(vols[0].length / devideNum);
+for (let i = 0; i < devideNum; i++) {
+  let frame = [];
+  for (let channel = 0; channel < 4; channel++) {
+    frame.push([]);
+    for (let j = 0; j < frameLength; j++) {
+      frame[channel].push(vols[channel][i * frameLength + j]);
+    }
+  }
+  let intensity = calcIntensity(frame);
+  const result = byAxis(intensity);
+  let maxSD = 0;
+  let SDSum = 0;
+  for (let channel = 0; channel < 4; channel++) {
+    let sd = calcSD(frame[channel]);
+    maxSD = (sd > maxSD) ? sd : maxSD;
+    SDSum += sd;
+  }
+  const avgSD = SDSum / 4;
+  //console.log('voldiff', result.volDiff);
+  //console.log('multi', maxVar / 1000000);
+  const confidence = result.volDiff / 10 / avgSD;
+  console.log('conf', confidence);
+  //console.log('conf', result.volDiff / 10 / (varSum / 4));
+  console.log(result);
+  console.log('');
+}
