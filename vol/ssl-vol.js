@@ -188,7 +188,7 @@ function byAxis(intensity) {
   }
   return {
     axis: a,
-    volDiff: labelData[3].v - labelData[2].v,
+    volDiff: labelData[3].v - labelData[0].v,
     ratio: ratio,
     awk: awk
   };
@@ -218,7 +218,8 @@ for (let i = 0; i < devideNum; i++) {
   const avgSD = SDSum / 4;
   //console.log('voldiff', result.volDiff);
   //console.log('multi', maxVar / 1000000);
-  const confidence = result.volDiff / 10 / avgSD;
+  const confidence = result.volDiff / 100 / avgSD;
+  //const confidence = result.volDiff / 10 / maxSD;
   console.log('conf', confidence);
   //console.log('conf', result.volDiff / 10 / (varSum / 4));
   console.log(result);
