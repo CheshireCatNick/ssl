@@ -218,8 +218,8 @@ for (let i = 0; i < devideNum; i++) {
   const avgSD = SDSum / 4;
   //console.log('voldiff', result.volDiff);
   //console.log('multi', maxVar / 1000000);
-  const confidence = result.volDiff / 100 / avgSD;
-  //const confidence = result.volDiff / 10 / maxSD;
+  const confidence = result.volDiff / 50 / avgSD;
+  //const confidence = result.volDiff / 100 / maxSD;
   console.log('conf', confidence);
   //console.log('conf', result.volDiff / 10 / (varSum / 4));
   console.log(result);
