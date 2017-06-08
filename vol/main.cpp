@@ -4,6 +4,7 @@
 #define MAXLINE 7000000
 #define MAXFRAMENUM 200
 #define MAXFILENAME 200
+#define TARGET_FREQUENCY 12000
 
 int testNum = 1;
 int maxBufferNum = 100;
@@ -106,6 +107,10 @@ void getVol(float* buffer, int bufferSize, double* vols) {
         maxStrength = strength[f];
         fWithMaxStrength = f;
       }
+    printf("max freq = %d\n", fWithMaxStrength);
+    // use defined freq instead of max strength freq
+    if (TARGET_FREQUENCY > 0)
+      fWithMaxStrength = TARGET_FREQUENCY;
     //if (maxStrength < 900000)
     //  return;
     int interval = 25;
@@ -146,7 +151,7 @@ int main(int argv, char* args[]) {
   buffer = new float*[channelNum];
   for (int i = 0; i < channelNum; i++)
     buffer[i] = new float[sampleNum * maxBufferNum];
-  char signalDataPath[] = "./data/signal/";
+  char signalDataPath[] = "./";
   char freqDataPath[] = "./data/volume/";
   char inputFileName[MAXFILENAME];
   strcpy(inputFileName, signalDataPath);
