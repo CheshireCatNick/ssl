@@ -17,8 +17,11 @@ int m_recordBufferNum_ = 7;
 int m_bufferSize_ = 4096 * m_recordBufferNum_;
 int m_targetFrequency_ = 12000;
 int m_maxVolumeFrameNum_ = 200;
-int** m_volume_;
+int*** m_volume_;
 int m_volumeFrameNum_;
+int m_maxSenderNum_ = 4;
+int m_senderNum = 2;
+int* m_frequency_;
 
 bool printFreq = false;
 bool printPredict = false;
@@ -80,7 +83,7 @@ float** chop(int channelIndex, int frameSize,
 
 void calcVolume(int channelIndex)
 {
-  int speedUpFactor = 1;
+  int speedUpFactor = 2;
   int MAXFREQ = 48000 / speedUpFactor;
   //  int findMINFREQ = 10000 / speedUpFactor;
   //  int findMAXFREQ = 14000 / speedUpFactor;
@@ -114,26 +117,28 @@ void calcVolume(int channelIndex)
     //printf("max freq = %d\n",
 //              findFrequencyWithMaxStrength(10, 1000, MAXFREQ, output));
     // calculate volume
+    // calculate volume
     int interval = 25;
-    m_volume_[channelIndex][frame] = 0;
-    //printf("frame: %d\n", frame);
-    for (int f = m_targetFrequency_ - interval; f <= m_targetFrequency_ + interval; f++)
-      m_volume_[channelIndex][frame]
-          += (int) (sqrt(output[f].i * output[f].i + output[f].r * output[f].r) / 100 + 0.5f);
-    printf("%d\n", m_volume_[channelIndex][frame]);
-    //printf("%d %f %d\n", fWithMaxStrength, strength[fWithMaxStrength], frameNum);
-    //vols[frame] = maxStrength;
-    //if (printFreq) fprintf(outputFP, "%f,", vols[frame]);
+    for (int senderI = 0; senderI < m_senderNum; senderI++)
+    {
+      m_volume_[channelIndex][senderI][frame] = 0;
+      int startF = m_frequency_[senderI] / speedUpFactor - interval;
+      int endF = m_frequency_[senderI] / speedUpFactor + interval;
+      for (int f = startF;f <= endF; f++)
+        m_volume_[channelIndex][senderI][frame]
+            += (int) (sqrt(output[f].i * output[f].i + output[f].r * output[f].r) / 100 + 0.5f);
+      printf("%d\n", m_volume_[channelIndex][senderI][frame]);
+    }
   }
 }
 
-float calcSD(int channelI, int voteFrameI, int voteFrameLen)
+float calcSD(int channelI, int voteFrameI, int voteFrameLen, int senderI)
 {
   float sum = 0;
   float ssum = 0;
   float v;
   for (int volI = 0; volI < voteFrameLen; volI++) {
-    v = m_volume_[channelI][voteFrameI * voteFrameLen + volI];
+    v = m_volume_[channelI][senderI][voteFrameI * voteFrameLen + volI];
     sum += v;
     ssum += v * v;
   }
@@ -151,7 +156,7 @@ void wire(std::pair<int, int> &a, std::pair<int, int> &b)
   }
 }
 
-void predictByAxis(int voteFrameI, int voteFrameLen)
+void predictByAxis(int voteFrameI, int voteFrameLen, int senderI)
 {
   int channelVolume[m_channelNum_];
   // calculate channel intensity
@@ -159,7 +164,7 @@ void predictByAxis(int voteFrameI, int voteFrameLen)
     channelVolume[channelI] = 0;
   for (int volI = 0; volI < voteFrameLen; volI++)
     for (int channelI = 0; channelI < m_channelNum_; channelI++)
-      channelVolume[channelI] += m_volume_[channelI][voteFrameI * voteFrameLen + volI];
+      channelVolume[channelI] += m_volume_[channelI][senderI][voteFrameI * voteFrameLen + volI];
 
   std::pair<int, int> axisVolume[m_channelNum_];
   axisVolume[0] = std::make_pair(1, channelVolume[3] + channelVolume[1]);
@@ -208,7 +213,7 @@ void predictByAxis(int voteFrameI, int voteFrameLen)
   float sd;
   for (int channelI = 0; channelI < m_channelNum_; channelI++)
   {
-    sd = calcSD(channelI, voteFrameI, voteFrameLen);
+    sd = calcSD(channelI, voteFrameI, voteFrameLen, senderI);
     printf("sd = %f\n", sd);
     maxSD = (sd > maxSD) ? sd : maxSD;
     SDSum += sd;
@@ -223,12 +228,12 @@ void predictByAxis(int voteFrameI, int voteFrameLen)
   return;
 }
 
-void calcDirection()
+void calcDirection(int senderI)
 {
   int voteFrameNum = 1;
   int voteFrameLen = m_volumeFrameNum_ / voteFrameNum;
   for (int voteFrameI = 0; voteFrameI < voteFrameNum; voteFrameI++)
-    predictByAxis(voteFrameI, voteFrameLen);
+    predictByAxis(voteFrameI, voteFrameLen, senderI);
   return;
 }
 
@@ -237,8 +242,11 @@ void localize()
   // calculate volume
   for (int i = 0; i < m_channelNum_; i++)
     calcVolume(i);
-  // calculate direction
-  calcDirection();
+  // calculate direction for each senderI
+  for (int senderI = 0; senderI < m_senderNum; senderI++) {
+    calcDirection(senderI);
+    printf("for frequency %d\n", m_frequency_[senderI]);
+  }
   return;
 }
 
@@ -248,9 +256,20 @@ int main(int argv, char* args[]) {
   for (int i = 0; i < m_channelNum_; i++)
     m_signal[i] = new float[m_bufferSize_];
 
-  m_volume_ = new int*[m_channelNum_];
-  for (int i = 0; i < m_channelNum_; i++)
-    m_volume_[i] = new int[m_maxVolumeFrameNum_];
+  m_volume_ = new int**[m_channelNum_];
+  for (int channelI = 0; channelI < m_channelNum_; channelI++)
+  {
+    m_volume_[channelI] = new int*[m_maxSenderNum_];
+    for (int senderI = 0; senderI < m_maxSenderNum_; senderI++)
+      m_volume_[channelI][senderI] = new int[m_maxVolumeFrameNum_];
+  }
+
+  m_frequency_ = new int[m_maxSenderNum_];
+  int highestFrequency = 12000;
+  for (int i = 0; i < m_maxSenderNum_; i++) {
+    m_frequency_[i] = highestFrequency;
+    highestFrequency -= 2000;
+  }
   // parse argv and open files
   char signalDataPath[] = "./";
   char freqDataPath[] = "./data/volume/";
